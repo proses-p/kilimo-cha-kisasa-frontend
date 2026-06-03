@@ -29,6 +29,12 @@ export default function Dashboard() {
                 <span style={styles.navLogo}>🌾 Kilimo Smart</span>
                 <div style={styles.navRight}>
                     <span style={styles.navUser}>👤 {user?.name}</span>
+                    <button
+                       style={styles.navBtn}
+                       onClick={() => navigate('/')}
+                    >
+                        Nyumbani
+                    </button>
                     <button onClick={handleLogout} style={styles.logoutBtn}>
                         Toka
                     </button>
