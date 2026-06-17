@@ -1,24 +1,48 @@
 import { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+
+
 import Toast from '../components/Toast';
 
 export default function Register() {
+    const [errors, setErrors] = useState({});
+    // removed react-hook-form/zod dependency to avoid missing schema import
+
     const [form, setForm]       = useState({ name: '', email: '', phone: '', password: '', password_confirmation: '' });
     const [error, setError]     = useState('');
     const [loading, setLoading] = useState(false);
     const [showSuccessToast, setShowSuccessToast] = useState(false);
-    const { register }          = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const navigate              = useNavigate();
 
-    const { user, loading: authLoading } = useAuth();
+    const { register: authRegister, user, loading: authLoading } = useAuth();
 
     if (!authLoading && user) return <Navigate to="/dashboard" />;
+
+    const validateField = (updatedForm) => {
+        const newErrors = {};
+        if (!updatedForm.name || updatedForm.name.trim().length === 0) newErrors.name = ['Jina linahitajika'];
+        if (!updatedForm.email || !/\S+@\S+\.\S+/.test(updatedForm.email)) newErrors.email = ['Barua pepe si sahihi'];
+        if (!updatedForm.password || updatedForm.password.length < 8) newErrors.password = ['Nywila lazima iwe angalau herufi 8'];
+        if (updatedForm.password !== updatedForm.password_confirmation) newErrors.password_confirmation = ['Nywila hazilingani'];
+        setErrors(newErrors);
+        return newErrors;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+
+        const fieldErrors = validateField(form);
+
+        if (Object.keys(fieldErrors).length > 0) {
+            setError(fieldErrors.name?.[0] || fieldErrors.email?.[0] || fieldErrors.password?.[0] || 'Invalid form data');
+            setLoading(false);
+            return;
+        }
 
         if (form.password !== form.password_confirmation) {
             setError('Nywila hazilingani!');
@@ -27,7 +51,7 @@ export default function Register() {
         }
 
         try {
-            await register(form);
+            await authRegister(form);
             setShowSuccessToast(true);
             // delay navigation by 3 seconds
             setTimeout(() => {
@@ -41,7 +65,11 @@ export default function Register() {
         }
     };
 
-    const update = (field) => (e) => setForm({...form, [field]: e.target.value});
+    const update = (field) => (e) => {
+        const newForm = { ...form, [field]: e.target.value };
+        setForm(newForm);
+        validateField(newForm);
+    };
 
     return (
         <div style={styles.container}>
@@ -67,19 +95,38 @@ export default function Register() {
                         { label: 'Simu',         field: 'phone',                 type: 'tel',      placeholder: '0712345678' },
                         { label: 'Nywila',       field: 'password',              type: 'password', placeholder: '••••••••' },
                         { label: 'Thibitisha Nywila', field: 'password_confirmation', type: 'password', placeholder: '••••••••' },
-                    ].map(({ label, field, type, placeholder }) => (
-                        <div key={field} style={styles.field}>
-                            <label style={styles.label}>{label}</label>
-                            <input
-                                type={type}
-                                style={styles.input}
-                                placeholder={placeholder}
-                                value={form[field]}
-                                onChange={update(field)}
-                                required={field !== 'phone'}
-                            />
-                        </div>
-                    ))}
+                    ].map(({ label, field, type, placeholder }) => {
+                        const isPasswordField = field === 'password';
+                        const isConfirmField = field === 'password_confirmation';
+                        const actualType = isPasswordField ? (showPassword ? 'text' : 'password') : isConfirmField ? (showPasswordConfirm ? 'text' : 'password') : type;
+
+                        return (
+                            <div key={field} style={styles.field}>
+                                <label style={styles.label}>{label}</label>
+                                <div style={{display: 'flex', alignItems: 'center'}}>
+                                    <input
+                                        type={actualType}
+                                        style={styles.input}
+                                        placeholder={placeholder}
+                                        value={form[field]}
+                                        onChange={update(field)}
+                                        required={field !== 'phone'}
+                                    />
+                                    {(isPasswordField || isConfirmField) && (
+                                        <button
+                                            type="button"
+                                            onClick={() => isPasswordField ? setShowPassword(s => !s) : setShowPasswordConfirm(s => !s)}
+                                            style={{marginLeft: 8, cursor: 'pointer', background: 'transparent', border: 'none'}}
+                                            aria-label={(isPasswordField ? showPassword : showPasswordConfirm) ? 'Hide password' : 'Show password'}
+                                        >
+                                            {(isPasswordField ? showPassword : showPasswordConfirm) ? '🙈' : '👁️'}
+                                        </button>
+                                    )}
+                                </div>
+                                {errors[field] && <div style={{ color: 'red', fontSize: '0.875rem', marginTop: '4px' }}>{errors[field][0]}</div>}
+                            </div>
+                        );
+                    })}
 
                     <button
                         type="submit"

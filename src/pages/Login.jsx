@@ -8,6 +8,7 @@ export default function Login() {
     const [form, setForm] = useState({ email: '', password: ''});
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [showSuccessToast, setShowSuccessToast] = useState(false);
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -20,6 +21,18 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         setError('');
+        // client-side validations similar to register page
+        if (!form.email || !/\S+@\S+\.\S+/.test(form.email)) {
+            setError('Barua pepe si sahihi');
+            setLoading(false);
+            return;
+        }
+
+        if (!form.password || form.password.length < 8) {
+            setError('Nywila lazima iwe angalau herufi 8');
+            setLoading(false);
+            return;
+        }
 
         try {
             await login(form);
@@ -73,14 +86,24 @@ export default function Login() {
 
                     <div style={styles.field}>
                         <label style={styles.label}>Password(nywila)</label>
-                        <input 
-                            type="password"
-                            style={styles.input}
-                            placeholder="........"
-                            value={form.password}
-                            onChange={e => setForm({...form, password: e.target.value})}
-                            required
-                             />
+                        <div style={{display: 'flex', alignItems: 'center'}}>
+                            <input 
+                                type={showPassword ? 'text' : 'password'}
+                                style={styles.input}
+                                placeholder="........"
+                                value={form.password}
+                                onChange={e => setForm({...form, password: e.target.value})}
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(s => !s)}
+                                style={{marginLeft: 8, cursor: 'pointer', background: 'transparent', border: 'none'}}
+                                aria-label={showPassword ? 'Hide password' : 'Show password'}
+                            >
+                                {showPassword ? '🙈' : '👁️'}
+                            </button>
+                        </div>
                     </div>
 
                     <button 

@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LandingPage from './pages/LandingPage';
+//import LandingPage from './pages/LandingPage';
 import Login      from './pages/Login';
 import Register   from './pages/Register';
-import Dashboard  from './pages/Dashboard';
+import Landing  from './pages/Dashboard/Landing';
 import Farms      from './pages/Farms';
 import FarmDetail from './pages/FarmDetail';
+import Dashboard  from './pages/Dashboard';
 
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -19,7 +20,7 @@ export default function App() {
         <AuthProvider>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/"  element={<LandingPage />}></Route>
+                    <Route path="/"  element={<Landing />}></Route>
                     <Route path="/login"    element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
