@@ -3,11 +3,13 @@ import CropCards from "./components/CropCards";
 import WeatherWidget from "./components/WeatherWidget";
 import StatsCards from "./components/StatsCards";
 import TipsSection from "./components/TipsSection";
+import Navbars from "./components/Navbars";
 
 export default function Dashboard() {
     return (
         <div style={styles.container}>
             <HeroSection />
+            <Navbars />
             <CropCards />
             <WeatherWidget />
             <StatsCards />

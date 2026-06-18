@@ -1,7 +1,7 @@
 export default function HeroSection() {
     return (
         <div style={styles.container}>
-            <h1 style={styles.title}>Karibu kwenye Dashboard ya Kilimo cha Kisasa</h1>
+            <h1 style={styles.title}>Karibu kwenye Kilimo cha Kisasa</h1>
             <p style={styles.subtitle}>Pata taarifa za hali ya hewa, takwimu za kilimo, na vidokezo vya kilimo bora, kwa teknolojia ya kisasa.</p>
         </div>
     );
