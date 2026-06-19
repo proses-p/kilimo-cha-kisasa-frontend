@@ -16,7 +16,7 @@ const styles = {
         textAlign: 'center'
     },
     title: {
-        fontSize: '2.5rem',
+        fontSize: '1.5rem',
         marginBottom: '10px'
     },
     subtitle: {

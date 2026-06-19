@@ -1,22 +1,22 @@
 const crops = [
   {
     name: "Maize",
-    image: "https://source.unsplash.com/400x300/?maize,farm",
+    image: "https://images.unsplash.com/photo-1723645013435-c3c8948faf59?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Maize is a staple crop that is widely cultivated for its versatility and high yield.",
   },
   {
     name: "Wheat",
-    image: "https://source.unsplash.com/400x300/?wheat,farm",
+    image: "https://images.unsplash.com/photo-1511735643442-503bb3bd348a?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Wheat is a cereal grain that is a major source of food worldwide, used for making bread, pasta, and other products.",
   },
   {
     name: "Rice",
-    image: "https://source.unsplash.com/400x300/?rice,field",
+    image: "https://images.unsplash.com/photo-1610760722225-7cd1135ca2da?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Rice is a staple food for more than half of the world's population, known for its adaptability to different climates.",
   },
   {
     name: "Beans",
-    image: "https://source.unsplash.com/400x300/?beans,farm",
+    image: "https://plus.unsplash.com/premium_photo-1661963106862-fac46c201cd6?q=80&w=906&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "Beans are a nutritious legume that provides protein and essential nutrients, commonly grown in various regions.",
   },
 ];
