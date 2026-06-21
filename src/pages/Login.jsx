@@ -15,7 +15,7 @@ export default function Login() {
 
     const { user, loading: authLoading } = useAuth();
 
-    if (!authLoading && user) return <Navigate to="/dashboard" />;
+    if (!authLoading && user) return <Navigate to={user?.id === 4 ? "/admin" : "/dashboard"} />;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,11 +35,15 @@ export default function Login() {
         }
 
         try {
-            await login(form);
+            const res = await login(form);
             setShowSuccessToast(true);
+            // determine destination: prefer returned user, fall back to context user
+            const returnedUser = res?.data?.user || res?.user || null;
+            const currentUser = returnedUser || user;
+            const dest = currentUser?.id === 4 ? '/admin' : '/dashboard';
             // delay navigation by 3 seconds
             setTimeout(() => {
-                navigate('/dashboard');
+                navigate(dest);
             }, 3000);
         } catch (err) {
             console.log(err.response?.data);
