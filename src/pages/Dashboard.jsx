@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
+import NotificationBell from '../components/NotificationBell';
 
 export default function Dashboard() {
     const [farms, setFarms]     = useState([]);
@@ -35,6 +36,7 @@ export default function Dashboard() {
                     >
                         Nyumbani
                     </button>
+                    <NotificationBell />
                     <button onClick={handleLogout} style={styles.logoutBtn}>
                         Toka
                     </button>

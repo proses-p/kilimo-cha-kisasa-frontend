@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }) => {
 
     // login
     const login = async (data) => {
+        console.log("LOGIN PAYLOAD SENT 👉", data);
         const res = await api.post('/login', data);
         localStorage.setItem('token', res.data.data.token);
         setUser(res.data.data.user);

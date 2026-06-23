@@ -14,9 +14,11 @@ export default function Login() {
     const navigate = useNavigate();
 
     const { user, loading: authLoading } = useAuth();
+    console.log(user);
 
-    if (!authLoading && user) return <Navigate to="/dashboard" />;
-
+    if (!authLoading && user) {
+        return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} />;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -35,11 +37,21 @@ export default function Login() {
         }
 
         try {
-            await login(form);
+            const res = await login(form);
+
+            console.log(res.data.data.user);
+            console.log(res.data.data.user.role);
             setShowSuccessToast(true);
             // delay navigation by 3 seconds
             setTimeout(() => {
-                navigate('/dashboard');
+            
+                if (user.role === 'admin') {
+                    navigate('/admin');
+                    return;
+                } else {
+                    navigate('/dashboard');
+                }
+
             }, 3000);
         } catch (err) {
             console.log(err.response?.data);

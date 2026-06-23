@@ -7,7 +7,8 @@ import Landing  from './pages/Dashboard/Landing';
 import Farms      from './pages/Farms';
 import FarmDetail from './pages/FarmDetail';
 import Dashboard  from './pages/Dashboard';
-
+import AdminDashboard from './admin/pages/AdminDashboard';
+    
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
     if (loading) return <div style={{ textAlign: 'center', marginTop: '3rem', color: '#166534' }}>🌾 Inapakia...</div>;
@@ -27,6 +28,7 @@ export default function App() {
                     <Route path="/farms"     element={<ProtectedRoute><Farms /></ProtectedRoute>} />
                     <Route path="/farms/:id" element={<ProtectedRoute><FarmDetail /></ProtectedRoute>} />
                     <Route path="/"          element={<Navigate to="/dashboard" />} />
+                    <Route path="/admin" element={<AdminDashboard />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>
