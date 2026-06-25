@@ -127,7 +127,7 @@ const Footer = () => {
             <ul className="footer-contact">
               <li>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>Kilimo House, Dodoma<br />Tanzania</span>
+                <span>Kilimo Cha kisasa, Morogoro<br />Tanzania</span>
               </li>
               <li>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.13 12 19.79 19.79 0 011.06 3.36 2 2 0 013.08 1.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.02z"/></svg>
@@ -137,36 +137,12 @@ const Footer = () => {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 <a href="prosesprojestus0@gmail.com">prosesprojestus0@gmail.com</a>
               </li>
-              <li>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                <span>Mon–Fri, 8am – 5pm EAT</span>
-              </li>
+              
             </ul>
           </div>
         </div>
 
-        {/* Stats Bar */}
-        <div className="footer-stats">
-          <div className="footer-stat">
-            <span className="footer-stat__number">12,400+</span>
-            <span className="footer-stat__label">Registered Farmers</span>
-          </div>
-          <div className="footer-stat__divider" aria-hidden="true" />
-          <div className="footer-stat">
-            <span className="footer-stat__number">340,000 ha</span>
-            <span className="footer-stat__label">Land Monitored</span>
-          </div>
-          <div className="footer-stat__divider" aria-hidden="true" />
-          <div className="footer-stat">
-            <span className="footer-stat__number">28 Crops</span>
-            <span className="footer-stat__label">Supported Varieties</span>
-          </div>
-          <div className="footer-stat__divider" aria-hidden="true" />
-          <div className="footer-stat">
-            <span className="footer-stat__number">99.8%</span>
-            <span className="footer-stat__label">Platform Uptime</span>
-          </div>
-        </div>
+        
       </div>
 
       {/* Bottom Bar */}
@@ -181,10 +157,7 @@ const Footer = () => {
             <a href="#">Cookie Settings</a>
             <a href="#">Accessibility</a>
           </div>
-          <div className="footer-bottom__badges">
-            <span className="footer-badge">🌾 ISO 27001</span>
-            <span className="footer-badge">🔒 SSL Secured</span>
-          </div>
+          
         </div>
       </div>
 

@@ -26,7 +26,8 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
-        padding: '20px',
+        width: '100%',
+        padding: '0px',
         background: '#f0fdf4',
         minHeight: '100vh'
     },
