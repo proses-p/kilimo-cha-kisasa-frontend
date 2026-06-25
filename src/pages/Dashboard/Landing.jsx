@@ -4,6 +4,8 @@ import WeatherWidget from "./components/WeatherWidget";
 import StatsCards from "./components/StatsCards";
 import TipsSection from "./components/TipsSection";
 import Navbars from "./components/Navbars";
+import Footer from './components/Footer';
+
 
 export default function Dashboard() {
     return (
@@ -14,6 +16,7 @@ export default function Dashboard() {
             <WeatherWidget />
             <StatsCards />
             <TipsSection />
+            <Footer />
         </div>
     );
 }

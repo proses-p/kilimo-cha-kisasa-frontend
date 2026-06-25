@@ -9,7 +9,7 @@ export default function HeroSection() {
 
 const styles = {
     container: {
-        background: 'linear-gradient(135deg, #16a34a, #22c55e)',
+        background: '#1a3a0e',
         color: 'white',
         padding: '40px 20px',
         borderRadius: '8px',
