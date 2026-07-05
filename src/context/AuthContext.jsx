@@ -1,31 +1,51 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import api from '../api/axios';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(() => Boolean(localStorage.getItem('token')));
+
+    const normalizeUser = (payload) => {
+        if (!payload) return null;
+        const baseUser = payload.user ?? payload;
+        if (!baseUser) return null;
+
+        return {
+            ...baseUser,
+            role: typeof baseUser.role === 'string' ? baseUser.role.toLowerCase() : baseUser.role,
+        };
+    };
 
     // angalia kama user ameshaingia
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token) {
-            api.get('/me')
-               .then(res => setUser(res.data.data))
-               .catch(() => localStorage.removeItem('token'))
-               .finally(() => setLoading(false));
-        } else {
-            setLoading(false);
+        if (!token) {
+            return;
         }
-    }, []);
 
+        let isMounted = true;
+
+        api.get('/me')
+           .then(res => {
+               if (isMounted) setUser(normalizeUser(res.data.data));
+           })
+           .catch(() => localStorage.removeItem('token'))
+           .finally(() => {
+               if (isMounted) setLoading(false);
+           });
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     // register
     const register = async (data) => {
         const res = await api.post('/register', data);
         localStorage.setItem('token', res.data.data.token);
-        setUser(res.data.data.user);
+        setUser(normalizeUser(res.data.data));
         return res.data;
     };
 
@@ -34,7 +54,7 @@ export const AuthProvider = ({ children }) => {
         console.log("LOGIN PAYLOAD SENT 👉", data);
         const res = await api.post('/login', data);
         localStorage.setItem('token', res.data.data.token);
-        setUser(res.data.data.user);
+        setUser(normalizeUser(res.data.data));
         return res.data;
     };
 
@@ -46,8 +66,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, register,login, logout }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ user, loading, register, login, logout }}>{children}</AuthContext.Provider>
     );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export { AuthContext };

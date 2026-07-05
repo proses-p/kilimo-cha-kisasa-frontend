@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
-//import LandingPage from './pages/LandingPage';
+import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './context/useAuth';
 import Login      from './pages/Login';
 import Register   from './pages/Register';
 import Landing  from './pages/Dashboard/Landing';
 import Farms      from './pages/Farms';
 import FarmDetail from './pages/FarmDetail';
 import Dashboard  from './pages/Dashboard';
-import AdminDashboard from './admin/pages/AdminDashboard';
+import AdminRoutes from './admin/routes/AdminRoutes';
     
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -27,8 +27,8 @@ export default function App() {
                     <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
                     <Route path="/farms"     element={<ProtectedRoute><Farms /></ProtectedRoute>} />
                     <Route path="/farms/:id" element={<ProtectedRoute><FarmDetail /></ProtectedRoute>} />
-                    <Route path="/"          element={<Navigate to="/dashboard" />} />
-                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/*" element={<ProtectedRoute><AdminRoutes /></ProtectedRoute>} />
+                    <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 import Toast from '../components/Toast';
 
 
@@ -17,7 +17,7 @@ export default function Login() {
     console.log(user);
 
     if (!authLoading && user) {
-        return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} />;
+        return <Navigate to={user.role === 'admin' ? '/admin/dashboard' : '/dashboard'} />;
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -38,20 +38,15 @@ export default function Login() {
 
         try {
             const res = await login(form);
+            const role = (res.data.data.user?.role ?? res.data.data.role ?? '').toLowerCase();
 
-            console.log(res.data.data.user);
-            console.log(res.data.data.user.role);
             setShowSuccessToast(true);
-            // delay navigation by 3 seconds
             setTimeout(() => {
-            
-                if (user.role === 'admin') {
-                    navigate('/admin');
+                if (role === 'admin') {
+                    navigate('/admin/dashboard');
                     return;
-                } else {
-                    navigate('/dashboard');
                 }
-
+                navigate('/dashboard');
             }, 3000);
         } catch (err) {
             console.log(err.response?.data);
