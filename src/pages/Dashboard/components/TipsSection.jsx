@@ -15,7 +15,9 @@ export default function TipsSection() {
 const styles = {
     container: {
         background: 'white',
+        fontFamily: 'apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
         padding: '20px',
+        fontSize: '14px',
         borderRadius: '8px',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     },

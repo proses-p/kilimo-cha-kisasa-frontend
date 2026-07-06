@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
         const res = await api.post('/login', data);
         localStorage.setItem('token', res.data.data.token);
         setUser(normalizeUser(res.data.data));
-        return res.data;
+        return res; // return full axios response to match callers expecting res.data
     };
 
     // logout

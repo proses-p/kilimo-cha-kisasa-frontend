@@ -58,8 +58,9 @@ export default function Register() {
                 navigate('/dashboard');
             }, 3000);
         } catch (err) {
+            //console.log(JSON.stringify(err.response.data, null, 2))
             console.log(err.response?.data);
-            setError('Kuna tatizo. Jaribu tena.');
+            setError('Samahani! barua pepe unayojaribu kusajili inatumika na akaunti nyingine');
         } finally {
             setLoading(false);
         }

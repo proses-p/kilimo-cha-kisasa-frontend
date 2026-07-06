@@ -38,6 +38,7 @@ export default function Login() {
 
         try {
             const res = await login(form);
+            console.log("LOGIN RESULT", res);
             const role = (res.data.data.user?.role ?? res.data.data.role ?? '').toLowerCase();
 
             setShowSuccessToast(true);
@@ -49,8 +50,14 @@ export default function Login() {
                 navigate('/dashboard');
             }, 3000);
         } catch (err) {
-            console.log(err.response?.data);
-            setError('Barua pepe au nywila si sahihi');
+            console.log("STATUS:", err.response?.status);
+            console.log("DATA:", err.response?.data);
+            console.log("FULL ERROR:", err);
+
+            setError(
+                err.response?.data?.message ||
+                "Server Error"
+            );
         } finally {
             setLoading(false);
         }
