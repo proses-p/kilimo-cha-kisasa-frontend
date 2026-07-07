@@ -190,26 +190,26 @@ export default function FarmDetail() {
                             <div style={s.wxAdvice}>{weather.farming_advice}</div>
                             <div style={s.card}>
     <div style={s.cardTitle}>
-        📅 Utabiri wa Hali ya Hewa
+         Utabiri wa Hali ya Hewa
     </div>
 
     {forecastLoading ? (
         <p>Inapakia utabiri...</p>
     ) : (
         forecast.map((item, index) => (
-            <div key={index}>
+            <div key={index} style={s.forecastItem}>
                 <p>
-                    📆 {item.datetime}
+                   {item.datetime}
                 </p>
 
                 <p>
-                    🌡️ {item.temperature}°C |
-                    💧 {item.humidity}% |
-                    🌧️ {item.rain}mm
+                    {item.temperature}°C |
+                    {item.humidity}% |
+                    {item.rain}mm
                 </p>
 
                 <p>
-                    {item.description}
+                   {item.description}
                 </p>
             </div>
         ))
@@ -404,4 +404,12 @@ const s = {
     btnCancel:  { background: '#f0fdf4', border: 'none', padding: '0.65rem 1.2rem', borderRadius: '10px', fontSize: '0.9rem', fontWeight: '600', cursor: 'pointer', color: '#166534' },
     btnSave:    { background: 'linear-gradient(135deg,#166534,#16a34a)', color: 'white', border: 'none', padding: '0.65rem 1.4rem', borderRadius: '10px', fontSize: '0.9rem', fontWeight: '700', cursor: 'pointer' },
     btnSaveDis: { background: '#86efac', color: 'white', border: 'none', padding: '0.65rem 1.4rem', borderRadius: '10px', fontSize: '0.9rem', cursor: 'not-allowed', fontWeight: '700' },
+
+    forecastItem: {
+    background: '#f0fdf4',
+    color: '#166534',
+    padding: '1rem',
+    borderRadius: '10px',
+    marginBottom: '0.7rem'
+}
 };
