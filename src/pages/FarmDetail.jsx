@@ -13,6 +13,9 @@ export default function FarmDetail() {
     const [loading, setLoading]   = useState(true);
     const [wxLoading, setWxLoading] = useState(true);
 
+    const [forecast, setForecast] = useState([]);
+    const [forecastLoading, setForecastLoading] = useState(true);
+
     // Crop modal
     const [showCropModal, setShowCropModal] = useState(false);
     const [cropForm, setCropForm] = useState({ crop_name: '', planting_date: '', harvest_date: '', status: 'planted', notes: '' });
@@ -26,10 +29,7 @@ export default function FarmDetail() {
 
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetchFarm();
-        fetchWeather();
-    }, [id]);
+    
 
     const fetchFarm = () => {
         setLoading(true);
@@ -43,9 +43,30 @@ export default function FarmDetail() {
         setWxLoading(true);
         api.get(`/farms/${id}/weather`)
            .then(res => setWeather(res.data.data))
-           .catch(() => setWeather(null))
+           //.catch(() => setWeather(null))
+           .catch((err) => {
+    console.log("WEATHER ERROR:", err.response?.data);
+    setWeather(null);
+})
            .finally(() => setWxLoading(false));
     };
+
+    const fetchForecast = () => {
+        setForecastLoading(true);
+        api.get(`/farms/${id}/weather/forecast`)
+            .then(res => setForecast(res.data.data))
+            .catch(() => {
+                setForecast([]);
+            })
+            .finally(() => setForecastLoading(false));
+    };
+
+    // call all functions in the useeffect
+    useEffect(() => {
+        fetchFarm();
+        fetchWeather();
+        fetchForecast();
+    }, [id]);
 
     // ── Ongeza Zao ──
     const handleAddCrop = async () => {
@@ -167,6 +188,33 @@ export default function FarmDetail() {
                                 <div style={s.wxStat}><div style={s.wxStatV}>{weather.temperature?.max}°C</div><div style={s.wxStatL}>🌡️ Juu</div></div>
                             </div>
                             <div style={s.wxAdvice}>{weather.farming_advice}</div>
+                            <div style={s.card}>
+    <div style={s.cardTitle}>
+        📅 Utabiri wa Hali ya Hewa
+    </div>
+
+    {forecastLoading ? (
+        <p>Inapakia utabiri...</p>
+    ) : (
+        forecast.map((item, index) => (
+            <div key={index}>
+                <p>
+                    📆 {item.datetime}
+                </p>
+
+                <p>
+                    🌡️ {item.temperature}°C |
+                    💧 {item.humidity}% |
+                    🌧️ {item.rain}mm
+                </p>
+
+                <p>
+                    {item.description}
+                </p>
+            </div>
+        ))
+    )}
+</div>
                         </>
                     )}
                 </div>
