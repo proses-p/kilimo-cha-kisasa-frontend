@@ -15,7 +15,6 @@ export default function TipsSection() {
 const styles = {
     container: {
         background: 'white',
-        fontFamily: 'apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
         padding: '20px',
         fontSize: '14px',
         borderRadius: '8px',
@@ -26,8 +25,11 @@ const styles = {
         marginBottom: '10px'
     },
     list: {
-        fontSize: '1.2rem',
+        fontFamily: 'apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+        fontSize: '14px',
         color: '#16a34a',
-        paddingLeft: '20px'
+        paddingLeft: '20px',
+        listStyleType: 'none'
+
     }
 };

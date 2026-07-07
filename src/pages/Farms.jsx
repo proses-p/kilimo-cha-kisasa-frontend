@@ -10,6 +10,8 @@ export default function Farms() {
     const [editFarm, setEditFarm]   = useState(null);
     const [error, setError]         = useState('');
     const [saving, setSaving]       = useState(false);
+    const [gettingLocation, setGettingLocation] = useState(false);
+    const [locationStatus, setLocationStatus] = useState('');
     const [form, setForm] = useState({
         name: '', location: '', latitude: '',
         longitude: '', size_acres: '', soil_type: ''
@@ -61,6 +63,11 @@ export default function Farms() {
             setError('Jaza sehemu zote zinazohitajika.');
             return;
         }
+
+        if (!form.latitude || !form.longitude) {
+            setError('Bonyeza "Tumia location yangu" kwanza.');
+            return;
+        }
         setSaving(true);
         setError('');
         try {
@@ -96,6 +103,50 @@ export default function Farms() {
     };
 
     const update = (field) => (e) => setForm({ ...form, [field]: e.target.value });
+
+    // getting location
+    const getCurrentLocation = () => {
+        if (!navigator.geolocation) {
+            setLocationStatus('Hamna ushirikiano wa GPS na Browser.');
+            return;
+        }
+        setGettingLocation(true);
+        setLocationStatus('');
+
+        navigator.geolocation.getCurrentPosition(
+        
+            (position) => {
+                setForm(prev => ({
+                    ...prev,
+                    latitude: position.coords.latitude.toString(),
+                    longitude: position.coords.longitude.toString(),
+                }));
+
+                setLocationStatus('Location imepatikana!');
+                setGettingLocation(false);
+            },
+            (error) => {
+                let message = 'Imeshindwa kupata location.';
+                if (error.code === 1) {
+                    message = 'Ruhusu browser kutuma location.';
+                }
+                if (error.code === 2) {
+
+                    message = 'Location haijapatikana.';
+                }
+                if (error.code === 3) {
+                    message = 'Location imechukua muda mrefu kupatikana....';
+                }
+
+                setLocationStatus(message);
+                setGettingLocation(false);
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+            }
+        );
+    };
 
     return (
         <div style={s.wrap}>
@@ -200,13 +251,27 @@ export default function Farms() {
                             </div>
                             {/* GPS */}
                             <div style={s.field}>
-                                <label style={s.lbl}>Latitude (GPS)</label>
-                                <input style={s.inp} placeholder="-3.3869" value={form.latitude} onChange={update('latitude')} />
+                                <label style={s.lbl}>GPS Location</label>
+                                <button
+                                    type="button"
+                                    style={s.btnLocation}
+                                    onClick={getCurrentLocation}
+                                    disabled={gettingLocation}
+
+                                    
+                                >
+                                    {gettingLocation
+                                        ? 'Inatafuta location...'
+                                        : 'Tumia location yangu'}
+                                    
+                                </button>
+
+                                {locationStatus && (
+                                    <small style={{ marginTop: 8 }}
+                                    >{locationStatus}</small>
+                                )}
                             </div>
-                            <div style={s.field}>
-                                <label style={s.lbl}>Longitude (GPS)</label>
-                                <input style={s.inp} placeholder="36.6830" value={form.longitude} onChange={update('longitude')} />
-                            </div>
+                            
                             {/* Ukubwa */}
                             <div style={s.field}>
                                 <label style={s.lbl}>Ukubwa (Ekari) *</label>
@@ -250,6 +315,15 @@ const s = {
     page:       { maxWidth: '900px', margin: '0 auto', padding: '1.75rem 1.5rem' },
     pageHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', gap: '1rem', flexWrap: 'wrap' },
     pageTitle:  { fontSize: '1.8rem', fontWeight: '700', color: '#0a3d1f', margin: 0 },
+    btnLocation: {
+        background: '#2563eb',
+        color: 'white',
+        border: 'none',
+        padding: '0.8rem',
+        borderRadius: '10px',
+        cursor: 'pointer',
+        fontWeight: '600'
+    },
     pageSub:    { color: '#6b7280', fontSize: '0.87rem', marginTop: '0.2rem' },
     btnBig:     { background: 'linear-gradient(135deg,#166534,#16a34a)', color: 'white', border: 'none', padding: '0.65rem 1.4rem', borderRadius: '10px', fontSize: '0.9rem', fontWeight: '700', cursor: 'pointer', boxShadow: '0 4px 12px rgba(22,163,74,0.3)' },
     center:     { textAlign: 'center', color: '#6b7280', marginTop: '3rem' },

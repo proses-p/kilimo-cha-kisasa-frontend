@@ -15,9 +15,12 @@ export default function StatsCards() {
 
 const styles = {
     grid: {
+        fontFamily: 'apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '20px'
+        gap: '20px',
+        fontSize: '14px'
+        
     },
     card: {
         background: 'white',
@@ -26,11 +29,11 @@ const styles = {
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     },
     title: {
-        fontSize: '1.5rem',
+        fontSize: '14px',
         marginBottom: '10px'
     },
     value: {
-        fontSize: '1.2rem',
+        fontSize: '14px',
         color: '#16a34a'
     }
 };
