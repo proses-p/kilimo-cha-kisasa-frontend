@@ -27,6 +27,9 @@ export default function FarmDetail() {
     const [actForm, setActForm] = useState({ activity_type: '', description: '', activity_date: '' });
     const [actSaving, setActSaving] = useState(false);
 
+    // recommendation state
+    const [recommendations, setRecommendations] = useState([]);
+
     const [error, setError] = useState('');
 
     
@@ -43,6 +46,7 @@ export default function FarmDetail() {
         setWxLoading(true);
         api.get(`/farms/${id}/weather`)
            .then(res => setWeather(res.data.data))
+           
            //.catch(() => setWeather(null))
            .catch((err) => {
     console.log("WEATHER ERROR:", err.response?.data);
