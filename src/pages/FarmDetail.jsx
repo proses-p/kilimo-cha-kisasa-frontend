@@ -45,12 +45,18 @@ export default function FarmDetail() {
     const fetchWeather = () => {
         setWxLoading(true);
         api.get(`/farms/${id}/weather`)
-           .then(res => setWeather(res.data.data))
+           .then(res => {
+            setWeather(res.data.data);
+
+            setRecommendations(res.data.recommendations || []);
+        
+    })
            
            //.catch(() => setWeather(null))
            .catch((err) => {
     console.log("WEATHER ERROR:", err.response?.data);
     setWeather(null);
+    setRecommendations([]);
 })
            .finally(() => setWxLoading(false));
     };
@@ -134,6 +140,28 @@ export default function FarmDetail() {
     const statusStyle = { planted: s.sPlanted, growing: s.sGrowing, harvested: s.sHarvested, failed: s.sFailed };
     const actIcon     = { watering: '💧', fertilizing: '🧪', weeding: '🌿', spraying: '🌱', pruning: '✂️' };
 
+    const recommendationColor = (type) => {
+
+    switch(type){
+
+        case "danger":
+            return "#d32f2f";
+
+        case "warning":
+            return "#f9a825";
+
+        case "info":
+            return "#0288d1";
+
+        case "success":
+            return "#2e7d32";
+
+        default:
+            return "#2e7d32";
+    }
+
+};
+
     return (
         <div style={s.wrap}>
             {/* Navbar */}
@@ -192,6 +220,54 @@ export default function FarmDetail() {
                                 <div style={s.wxStat}><div style={s.wxStatV}>{weather.temperature?.max}°C</div><div style={s.wxStatL}>🌡️ Juu</div></div>
                             </div>
                             <div style={s.wxAdvice}>{weather.farming_advice}</div>
+
+                            /* AI recommendation */
+                            <div style={s.card}>
+    <div style={s.cardTitle}>
+        🤖 AI Smart Recommendations
+    </div>
+
+    {
+        recommendations.length === 0 ? (
+            <p>Hakuna mapendekezo kwa sasa.</p>
+        ) : (
+
+            recommendations.map((item,index)=>(
+
+                <div
+                    key={index}
+                    style={{
+                        marginBottom:15,
+                        padding:15,
+                        borderRadius:10,
+                        background:
+                        item.type==="danger"
+                        ? "#ffebee"
+                        : item.type==="warning"
+                        ? "#fff8e1"
+                        : item.type==="info"
+                        ? "#e3f2fd"
+                        : "#e8f5e9",
+                        borderLeft:`5px solid ${recommendationColor(item.type)}`
+                    }}
+                >
+
+                    <h4>
+                        {item.icon} {item.title}
+                    </h4>
+
+                    <p>
+                        {item.message}
+                    </p>
+
+                </div>
+
+            ))
+
+        )
+    }
+
+</div>
                             <div style={s.card}>
     <div style={s.cardTitle}>
          Utabiri wa Hali ya Hewa
