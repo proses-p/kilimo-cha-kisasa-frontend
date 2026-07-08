@@ -45,7 +45,7 @@ export default function FarmDetail() {
     const fetchWeather = () => {
         setWxLoading(true);
         api.get(`/farms/${id}/weather`)
-           .then(res => {
+           .then((res) => {
             setWeather(res.data.data);
 
             setRecommendations(res.data.recommendations || []);
@@ -221,10 +221,10 @@ export default function FarmDetail() {
                             </div>
                             <div style={s.wxAdvice}>{weather.farming_advice}</div>
 
-                            /* AI recommendation */
+                            {/* AI recommendation */}
                             <div style={s.card}>
     <div style={s.cardTitle}>
-        🤖 AI Smart Recommendations
+        🤖 Rejea
     </div>
 
     {

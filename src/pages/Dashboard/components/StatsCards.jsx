@@ -1,4 +1,4 @@
-export default function StatsCards() {
+{/*export default function StatsCards() {
     return (
         <div style={styles.grid}>
             <div style={styles.card}>
@@ -36,4 +36,4 @@ const styles = {
         fontSize: '14px',
         color: '#16a34a'
     }
-};
+};*/}

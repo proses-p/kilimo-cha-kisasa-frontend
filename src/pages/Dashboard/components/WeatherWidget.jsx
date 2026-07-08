@@ -1,4 +1,4 @@
-export default function WeatherWidget() {
+{/*export default function WeatherWidget() {
     return (
         <div style={styles.container}>
             <h2 style={styles.title}>Hali ya Hewa ya Sasa</h2>
@@ -25,3 +25,4 @@ const styles = {
         color: '#16a34a'
     }
 };
+*/}

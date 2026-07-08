@@ -22,50 +22,137 @@ const crops = [
 ];
 
 export default function CropCards() {
-    return (
-       <div>
-        <h3>Mazao maarufu</h3>
+    // Duplicated once so the slide loop is seamless (no visible jump/reset)
+    const loopCrops = [...crops, ...crops];
 
-        <div style={styles.grid}>
-          {crops.map((crop) => (
-            <div key={crop.name} style={styles.card}>
-              <img src={crop.image} alt={crop.name} style={styles.image} />
-              <h4 style={styles.cropName}>{crop.name}</h4>
-              <p style={styles.description}>{crop.description}</p>
-            </div>
-          ))}
+    return (
+       <div style={styles.wrapper}>
+        <div style={styles.glow}></div>
+
+        <h3 style={styles.heading}>Mazao maarufu</h3>
+
+        <div style={styles.viewport}>
+          <div style={styles.track} className="ck-track">
+            {loopCrops.map((crop, i) => (
+              <div key={crop.name + i} style={styles.card}>
+                <img src={crop.image} alt={crop.name} style={styles.image} />
+                <div style={styles.cardBody}>
+                  <h4 style={styles.cropName}>{crop.name}</h4>
+                  <p style={styles.description}>{crop.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        <style>{`
+          @keyframes ck-slide {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+          }
+          .ck-track {
+            animation: ck-slide 40s linear infinite;
+          }
+          .ck-track:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
       </div>
     );
-}   
+}
 
 const styles = {
-    grid: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    wrapper: {
+        background: `
+            radial-gradient(circle at 85% 10%, rgba(94, 234, 212, 0.14), transparent 45%),
+            linear-gradient(135deg, #052e16 0%, #14532d 50%, #0f766e 100%)
+        `,
+        padding: '32px 0 32px 24px',
+        borderRadius: '18px',
+        boxShadow: '0 20px 45px rgba(4, 47, 30, 0.4), inset 0 1px 0 rgba(94, 234, 212, 0.08)',
+        border: '1px solid rgba(94, 234, 212, 0.15)',
+        position: 'relative',
+        overflow: 'hidden',
+        fontFamily: "'Inter', 'Segoe UI', sans-serif"
+    },
+
+    glow: {
+        position: 'absolute',
+        top: '-70px',
+        right: '-50px',
+        width: '200px',
+        height: '200px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(74, 222, 128, 0.2), transparent 70%)',
+        filter: 'blur(6px)',
+        pointerEvents: 'none'
+    },
+
+    heading: {
+        fontSize: '1.5rem',
+        fontWeight: '500',
+        letterSpacing: '0.2px',
+        marginBottom: '20px',
+        paddingRight: '24px',
+        background: 'linear-gradient(90deg, #bbf7d0 0%, #5eead4 60%, #99f6e4 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+        position: 'relative',
+        zIndex: 1
+    },
+
+    viewport: {
+        overflow: 'hidden',
+        position: 'relative',
+        zIndex: 1,
+        maskImage: 'linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%)',
+        WebkitMaskImage: 'linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%)'
+    },
+
+    track: {
+        display: 'flex',
         gap: '20px',
-        marginTop: '20px'
+        width: 'max-content',
+        willChange: 'transform'
     },
+
     card: {
-        background: 'white',
-        padding: '15px',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-        textAlign: 'center'
+        background: 'linear-gradient(160deg, rgba(20, 83, 45, 0.55), rgba(15, 118, 110, 0.45))',
+        border: '1px solid rgba(94, 234, 212, 0.18)',
+        padding: '14px',
+        borderRadius: '14px',
+        boxShadow: '0 12px 30px rgba(4, 47, 30, 0.35)',
+        textAlign: 'center',
+        width: '250px',
+        flexShrink: 0
     },
+
     image: {
         width: '100%',
         height: '150px',
         objectFit: 'cover',
-        borderRadius: '4px'
+        borderRadius: '10px',
+        display: 'block'
     },
-    cropName: {
-        fontSize: '1.2rem',
+
+    cardBody: {
         marginTop: '10px'
     },
+
+    cropName: {
+        fontSize: '1.15rem',
+        fontWeight: '500',
+        margin: 0,
+        color: '#d1fae5',
+        letterSpacing: '0.2px'
+    },
+
     description: {
-        fontSize: '1rem',
-        color: '#555',
-        marginTop: '5px'
+        fontSize: '0.9rem',
+        fontWeight: '400',
+        color: '#a7f3d0',
+        marginTop: '6px',
+        lineHeight: '1.5'
     }
 };
