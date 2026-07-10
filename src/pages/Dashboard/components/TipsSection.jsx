@@ -72,7 +72,7 @@ const styles = {
         `,
         padding: '32px 24px',
         fontSize: '14px',
-        borderRadius: '18px',
+        borderRadius: 'px',
         boxShadow: '0 20px 45px rgba(4, 47, 30, 0.4), inset 0 1px 0 rgba(94, 234, 212, 0.08)',
         border: '1px solid rgba(94, 234, 212, 0.15)',
         position: 'relative',

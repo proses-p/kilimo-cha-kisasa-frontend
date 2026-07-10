@@ -68,7 +68,7 @@ const styles = {
             linear-gradient(135deg, #052e16 0%, #14532d 50%, #0f766e 100%)
         `,
         padding: '32px 0 32px 24px',
-        borderRadius: '18px',
+        borderRadius: 'px',
         boxShadow: '0 20px 45px rgba(4, 47, 30, 0.4), inset 0 1px 0 rgba(94, 234, 212, 0.08)',
         border: '1px solid rgba(94, 234, 212, 0.15)',
         position: 'relative',

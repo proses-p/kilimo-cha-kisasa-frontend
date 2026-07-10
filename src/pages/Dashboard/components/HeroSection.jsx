@@ -12,7 +12,7 @@ const styles = {
         background: 'linear-gradient(135deg, #052e16 0%, #14532d 45%, #0f766e 100%)',
         color: '#ecfdf5',
         padding: '56px 28px',
-        borderRadius: '20px',
+        borderRadius: '0px',
         textAlign: 'center',
         boxShadow: '0 20px 50px rgba(4, 47, 30, 0.45), inset 0 1px 0 rgba(94, 234, 212, 0.08)',
         border: '1px solid rgba(94, 234, 212, 0.15)',
