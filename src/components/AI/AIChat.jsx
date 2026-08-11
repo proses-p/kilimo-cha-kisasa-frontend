@@ -321,6 +321,7 @@ export default function AIChat() {
                         "
                     >
 
+
                         {/* Welcome */}
 
                         {showWelcome && (
@@ -358,6 +359,7 @@ export default function AIChat() {
                                     >
                                         Karibu Kilimo Smart AI
                                     </h3>
+                                
 
                                     <p
                                         className="
