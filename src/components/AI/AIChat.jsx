@@ -71,7 +71,7 @@ export default function AIChat() {
 
         try {
             const response = await axios.post("/api/ask-ai", {
-                prompt: cleanMessage,
+                message: cleanMessage,
             });
 
             const reply = response.data?.reply;
