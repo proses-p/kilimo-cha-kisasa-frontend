@@ -163,7 +163,7 @@ const Footer = () => {
 
       <style>{`
         .footer {
-          background-color: #0f1f0a;
+          background-color: #07191E;
           color: #c8dcb0;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           font-size: 14px;
@@ -172,7 +172,7 @@ const Footer = () => {
 
         /* Banner */
         .footer-banner {
-          background-color: #1a3a0e;
+          background-color: #07191E;
           border-bottom: 1px solid #2a5018;
         }
         .footer-banner__inner {

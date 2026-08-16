@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import api from "../../api/axios";
 
 const quickQuestions = [
     "Ni mbolea gani nzuri kwa mahindi?",
@@ -70,7 +70,7 @@ export default function AIChat() {
         setLoading(true);
 
         try {
-            const response = await axios.post("/api/ask-ai", {
+            const response = await api.post("/ask-ai", {
                 message: cleanMessage,
             });
 

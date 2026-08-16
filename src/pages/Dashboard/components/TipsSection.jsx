@@ -42,24 +42,7 @@ export default function TipsSection() {
                 </span>
             </div>
 
-            <ul style={styles.list}>
-                <li style={styles.listItem}>
-                    <span style={styles.bullet}>🌱</span>
-                    Fanya uchunguzi wa udongo kabla ya kupanda.
-                </li>
-                <li style={styles.listItem}>
-                    <span style={styles.bullet}>🌾</span>
-                    Matumizi ya mbolea bora kwa mimea yako.
-                </li>
-                <li style={styles.listItem}>
-                    <span style={styles.bullet}>💧</span>
-                    Kulima kwa kutumia teknolojia ya kisasa.
-                </li>
-                <li style={styles.listItem}>
-                    <span style={styles.bullet}>☀️</span>
-                    Kufuata hali ya hewa ili kupanga shughuli zako za kilimo.
-                </li>
-            </ul>
+            
         </div>
     );
 }
