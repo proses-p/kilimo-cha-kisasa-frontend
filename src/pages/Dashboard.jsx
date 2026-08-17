@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import api from '../api/axios';
 import NotificationBell from '../components/NotificationBell';
+import { FaHome } from "react-icons/fa";
 
 export default function Dashboard() {
     const [farms, setFarms]     = useState([]);
@@ -33,9 +34,10 @@ export default function Dashboard() {
                     <button
                        className="ks-navbtn"
                        style={styles.navBtn}
+                       title='Nyumbani'
                        onClick={() => navigate('/')}
                     >
-                        Nyumbani
+                        <FaHome />
                     </button>
                     <NotificationBell />
                     <button onClick={handleLogout} className="ks-logoutbtn" style={styles.logoutBtn}>
@@ -47,7 +49,7 @@ export default function Dashboard() {
             <div style={styles.content}>
                 {/* Welcome */}
                 <h2 style={styles.welcome}>
-                    Habari, {user?.name?.split(' ')[0]}! 👋
+                    Habari, {user?.name?.split(' ')[0]}! 
                 </h2>
 
                 {/* Stats Cards */}
@@ -66,7 +68,7 @@ export default function Dashboard() {
 
                 {/* Farms List */}
                 <div style={styles.section}>
-                    <div style={styles.sectionHeader}>
+                    {/*<div style={styles.sectionHeader}>
                         <h3 style={styles.sectionTitle}>Mashamba Yangu</h3>
                         <button
                             onClick={() => navigate('/farms')}
@@ -75,7 +77,7 @@ export default function Dashboard() {
                         >
                             + Ongeza Shamba
                         </button>
-                    </div>
+                    </div> */}
 
                     {loading ? (
                         <p style={styles.loading}>Inapakia...</p>
@@ -87,7 +89,7 @@ export default function Dashboard() {
                                 className="ks-addbtn"
                                 style={styles.addBtn}
                             >
-                                Ongeza Shamba la Kwanza
+                                Ongeza Shamba
                             </button>
                         </div>
                     ) : (

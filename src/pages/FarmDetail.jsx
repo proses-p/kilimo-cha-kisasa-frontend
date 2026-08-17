@@ -54,9 +54,9 @@ export default function FarmDetail() {
            
            //.catch(() => setWeather(null))
            .catch((err) => {
-    console.log("WEATHER ERROR:", err.response?.data);
-    setWeather(null);
-    setRecommendations([]);
+            console.log("WEATHER ERROR:", err.response?.data);
+            setWeather(null);
+            setRecommendations([]);
 })
            .finally(() => setWxLoading(false));
     };
@@ -77,7 +77,6 @@ export default function FarmDetail() {
         fetchWeather();
         fetchForecast();
     }, [id]);
-
     // ── Ongeza Zao ──
     const handleAddCrop = async () => {
         if (!cropForm.crop_name || !cropForm.planting_date) {
@@ -140,6 +139,7 @@ export default function FarmDetail() {
     const statusStyle = { planted: s.sPlanted, growing: s.sGrowing, harvested: s.sHarvested, failed: s.sFailed };
     const actIcon     = { watering: '💧', fertilizing: '🧪', weeding: '🌿', spraying: '🌱', pruning: '✂️' };
 
+
     const recommendationColor = (type) => {
 
     switch(type){
@@ -180,10 +180,10 @@ export default function FarmDetail() {
                 <div style={s.hero}>
                     <div style={s.heroTitle}>{farm.name}</div>
                     <div style={s.heroMeta}>
-                        <span>📍 {farm.location}</span>
-                        <span>📐 {farm.size_acres} ekari</span>
-                        <span>🪨 {farm.soil_type}</span>
-                        <span>🌱 {farm.crops?.length || 0} mazao</span>
+                        <span> {farm.location}</span>
+                        <span> {farm.size_acres} ekari</span>
+                        <span> {farm.soil_type}</span>
+                        <span> {farm.crops?.length || 0} mazao</span>
                     </div>
                 </div>
 
@@ -193,7 +193,7 @@ export default function FarmDetail() {
                         <p style={{ color: 'rgba(255,255,255,0.8)' }}>Inapakia hali ya hewa...</p>
                     ) : !weather ? (
                         <div>
-                            <div style={s.wxLoc}>⛅ Hali ya Hewa</div>
+                            <div style={s.wxLoc}> Hali ya Hewa</div>
                             <p style={{ color: 'rgba(255,255,255,0.8)', marginTop: '0.5rem', fontSize: '0.9rem' }}>
                                 Hewa haipatikani. Hakikisha shamba lina GPS coordinates (latitude na longitude).
                             </p>
@@ -202,7 +202,7 @@ export default function FarmDetail() {
                         <>
                             <div style={s.wxTop}>
                                 <div>
-                                    <div style={s.wxLoc}>⛅ Hali ya Hewa — {weather.location}</div>
+                                    <div style={s.wxLoc}> Hali ya Hewa — {weather.location}</div>
                                     <div style={s.wxTemp}>{weather.temperature?.current}°C</div>
                                     <div style={s.wxDesc}>{weather.description}</div>
                                 </div>
@@ -323,7 +323,7 @@ export default function FarmDetail() {
                                     <div style={s.cropDate}>Kupandwa: {new Date(crop.planting_date).toLocaleDateString('sw-TZ')}</div>
                                     <div><span style={{ ...s.status, ...statusStyle[crop.status] }}>{statusLabel[crop.status]}</span></div>
                                     {crop.harvest_date && (
-                                        <div style={s.cropHvst}>🗓️ Kuvuna: {new Date(crop.harvest_date).toLocaleDateString('sw-TZ')}</div>
+                                        <div style={s.cropHvst}> Kuvuna: {new Date(crop.harvest_date).toLocaleDateString('sw-TZ')}</div>
                                     )}
                                     <button
                                         style={s.actBtn}
@@ -338,7 +338,7 @@ export default function FarmDetail() {
                 {/* ── SHUGHULI ── */}
                 <div style={s.card}>
                     <div style={s.cardHdr}>
-                        <div style={s.cardTitle}>📋 Shughuli za Hivi Karibuni</div>
+                        <div style={s.cardTitle}> Shughuli za Hivi Karibuni</div>
                     </div>
                     {!allActivities.length ? (
                         <p style={s.empty}>Bado hakuna shughuli zilizorekodiwa.</p>
@@ -391,17 +391,17 @@ export default function FarmDetail() {
             {showActModal && (
                 <div style={s.overlay} onClick={e => { if (e.target === e.currentTarget) setShowActModal(false); }}>
                     <div style={s.modal}>
-                        <h3 style={s.modalTitle}>📋 Ongeza Shughuli</h3>
+                        <h3 style={s.modalTitle}> Ongeza Shughuli</h3>
                         {error && <div style={s.err}>{error}</div>}
                         <div style={s.field}>
                             <label style={s.lbl}>Aina ya Shughuli *</label>
                             <select style={s.inp} value={actForm.activity_type} onChange={e => setActForm({...actForm, activity_type: e.target.value})}>
                                 <option value="">Chagua...</option>
-                                <option value="watering">💧 Kumwagilia</option>
-                                <option value="fertilizing">🧪 Kuweka Mbolea</option>
-                                <option value="weeding">🌿 Kupalilia</option>
-                                <option value="spraying">🌱 Kunyunyizia Dawa</option>
-                                <option value="pruning">✂️ Kupogoa</option>
+                                <option value="watering"> Kumwagilia</option>
+                                <option value="fertilizing"> Kuweka Mbolea</option>
+                                <option value="weeding"> Kupalilia</option>
+                                <option value="spraying"> Kunyunyizia Dawa</option>
+                                <option value="pruning"> Kupogoa</option>
                             </select>
                         </div>
                         <div style={s.field}><label style={s.lbl}>Tarehe ya Shughuli *</label><input style={s.inp} type="date" value={actForm.activity_date} onChange={e => setActForm({...actForm, activity_date: e.target.value})} /></div>
