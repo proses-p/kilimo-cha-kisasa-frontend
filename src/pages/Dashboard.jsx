@@ -11,16 +11,18 @@ export default function Dashboard() {
     const { user, logout }      = useAuth();
     const navigate              = useNavigate();
 
+       const handleLogout = async () => {
+        await logout();
+        navigate('/login');
+    };
+
     useEffect(() => {
         api.get('/farms')
            .then(res => setFarms(res.data.data))
            .finally(() => setLoading(false));
     }, []);
 
-    const handleLogout = async () => {
-        await logout();
-        navigate('/login');
-    };
+ 
 
     const totalCrops = farms.reduce((sum, farm) => sum + (farm.crops_count || 0), 0);
 

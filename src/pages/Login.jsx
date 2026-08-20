@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import Toast from '../components/Toast';
+//import { AuthContext } from '../context/AuthContext';
 
 
 export default function Login() {
@@ -11,14 +12,14 @@ export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
     const [showSuccessToast, setShowSuccessToast] = useState(false);
     const { login } = useAuth();
-    const navigate = useNavigate();
+   const navigate = useNavigate();
+   // const { user, loading: authLoading } = useAuth();
+    // console.log(user);
 
-    const { user, loading: authLoading } = useAuth();
-    console.log(user);
+    // if (!authLoading && user) {
+    //     return <Navigate to={user.role === 'admin' ? '/admin/dashboard' : '/dashboard'} />;
+    // }
 
-    if (!authLoading && user) {
-        return <Navigate to={user.role === 'admin' ? '/admin/dashboard' : '/dashboard'} />;
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -38,9 +39,17 @@ export default function Login() {
 
         try {
             const res = await login(form);
-            console.log("LOGIN RESULT", res);
-            const role = (res.data.data.user?.role ?? res.data.data.role ?? '').toLowerCase();
 
+
+            console.log(`Login Response Data ${res}`);
+
+            //debugger
+            console.log("LOGIN RESULT", res);
+            //const token = res.data?.data['token'];
+            //const userData = res?.data?.data['user'];
+            const role = (res.data.data.user?.role ?? res.data.data.role ?? '').toLowerCase();
+            //sessionStorage.setItem("user", JSON.stringify(userData)); // sessionStorage stores string data
+            //sessionStorage.setItem("token", token);
             setShowSuccessToast(true);
             setTimeout(() => {
                 if (role === 'admin') {
@@ -49,6 +58,8 @@ export default function Login() {
                 }
                 navigate('/dashboard');
             }, 3000);
+
+
         } catch (err) {
             console.log("STATUS:", err.response?.status);
             console.log("DATA:", err.response?.data);
@@ -71,11 +82,11 @@ export default function Login() {
             <div style={styles.blobTwo}></div>
 
             {showSuccessToast && (
-                <Toast 
-                    message="Umeingia kikamilifu! ✓" 
-                    type="success" 
+                <Toast
+                    message="Umeingia kikamilifu! ✓"
+                    type="success"
                     duration={3000}
-                    onClose={() => setShowSuccessToast(false)} 
+                    onClose={() => setShowSuccessToast(false)}
                 />
             )}
             <div style={styles.card}>
@@ -91,7 +102,7 @@ export default function Login() {
                 <form onSubmit={handleSubmit}>
                     <div style={styles.field}>
                         <label style={styles.label}>Email(Barua pepe)</label>
-                        <input 
+                        <input
                             type="email"
                             className="ks-input"
                             style={styles.input}
@@ -105,7 +116,7 @@ export default function Login() {
                     <div style={styles.field}>
                         <label style={styles.label}>Password(nywila)</label>
                         <div style={styles.passwordRow}>
-                            <input 
+                            <input
                                 type={showPassword ? 'text' : 'password'}
                                 className="ks-input"
                                 style={styles.input}
@@ -125,7 +136,7 @@ export default function Login() {
                         </div>
                     </div>
 
-                    <button 
+                    <button
                          type="submit"
                          className="ks-btn"
                          style={loading ? styles.btnDisabled : styles.btn}
@@ -140,7 +151,7 @@ export default function Login() {
                     <Link to="/register" style={styles.linkText}>
                         Jisajili hapa
                     </Link>
-                    
+
                 </p>
             </div>
 

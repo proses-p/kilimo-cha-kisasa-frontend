@@ -13,6 +13,7 @@ export default function AdminCrops() {
         setLoadingCrops(true);
         try {
             const res = await fetchCrops();
+            console.log("Response:", res.data);
             setCrops(res.data.data);
         } catch {
             setError('Imeshindwa kupakia mazao.');
@@ -28,6 +29,7 @@ export default function AdminCrops() {
             setLoadingCrops(true);
             try {
                 const res = await fetchCrops();
+                console.log("Response:", res.data);
                 setCrops(res.data.data);
             } catch {
                 setError('Imeshindwa kupakia mazao.');

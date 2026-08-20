@@ -51,10 +51,14 @@ export const AuthProvider = ({ children }) => {
 
     // login
     const login = async (data) => {
-        console.log("LOGIN PAYLOAD SENT 👉", data);
+        //console.log("LOGIN PAYLOAD SENT 👉", data);
         const res = await api.post('/login', data);
-        localStorage.setItem('token', res.data.data.token);
-        setUser(normalizeUser(res.data.data));
+        const userData = res.data?.data?.user;
+        const token = res.data?.data?.token;
+        sessionStorage.setItem('user', JSON.stringify(userData));
+        sessionStorage.setItem('token', token);
+        //setUser(normalizeUser(res.data.data));
+        setUser(userData);
         return res; // return full axios response to match callers expecting res.data
     };
 

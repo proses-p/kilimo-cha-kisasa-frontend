@@ -75,6 +75,8 @@ export default function AIChat() {
             });
 
             const reply = response.data?.reply;
+            // console.log("Response:", response);
+            // console.log("Response:", response.data);
 
             setMessages((prev) => [
                 ...prev,

@@ -9,13 +9,14 @@ export default function AdminDashboard() {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        console.log(`Admin Page`)
         if (user?.role === 'admin') {
             fetchDashboard()
                 .then(res => setStats(res.data))
                 .catch(() => setError('Imeshindwa kupakia takwimu za admin.'));
         }
     }, [user]);
-
+fetch
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;
     if (user.role !== 'admin') return <Navigate to="/dashboard" />;

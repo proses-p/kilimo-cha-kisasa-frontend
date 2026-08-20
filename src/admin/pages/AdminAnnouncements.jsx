@@ -10,16 +10,17 @@ export default function AdminAnnouncements() {
     const [loadingAnnouncements, setLoadingAnnouncements] = useState(false);
 
     useEffect(() => {
-        if (user?.role === 'admin') loadAnnouncements();
-    }, [user]);
 
-    const loadAnnouncements = () => {
+        const loadAnnouncements = () => {
         setLoadingAnnouncements(true);
         fetchAnnouncements()
             .then(res => setAnnouncements(res.data.data))
             .catch(() => setError('Imeshindwa kupakia matangazo.'))
             .finally(() => setLoadingAnnouncements(false));
     };
+
+        if (user?.role === 'admin') loadAnnouncements();
+    }, [user]);
 
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;
@@ -51,7 +52,7 @@ export default function AdminAnnouncements() {
                                     <td>{item.body}</td>
                                     <td>
                                         <button
-                                            onClick={() => deleteAnnouncement(item.id).then(loadAnnouncements)}
+                                            onClick={() => deleteAnnouncement(item.id).then(loadingAnnouncements)}
                                             style={deleteBtn}
                                         >
                                             Futa

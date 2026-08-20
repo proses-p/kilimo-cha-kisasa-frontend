@@ -12,16 +12,18 @@ export default function AdminUsers() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (user?.role === 'admin') fetchUsersList();
-    }, [user, page, query]);
 
-    const fetchUsersList = () => {
+        const fetchUsersList = () => {
         setLoadingUsers(true);
         fetchUsers({ q: query, page })
             .then(res => setUsers(res.data.data))
             .catch(() => setError('Imeshindwa kupakia watumiaji.'))
             .finally(() => setLoadingUsers(false));
     };
+        if (user?.role === 'admin') fetchUsersList();
+    }, [user, page, query]);
+
+    
 
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;

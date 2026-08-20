@@ -22,8 +22,6 @@ export default function Farms() {
 
     // ── Pakia mashamba ──
     useEffect(() => {
-        fetchFarms();
-    }, []);
 
     const fetchFarms = () => {
         setLoading(true);
@@ -32,6 +30,10 @@ export default function Farms() {
            .catch(() => setError('Imeshindwa kupakia mashamba.'))
            .finally(() => setLoading(false));
     };
+
+        fetchFarms();
+    }, []);
+
 
     // ── Fungua modal ya kuongeza ──
     const openAdd = () => {
