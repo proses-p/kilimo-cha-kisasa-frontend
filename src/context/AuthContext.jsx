@@ -5,7 +5,7 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(() => Boolean(localStorage.getItem('token')));
+    const [loading, setLoading] = useState(() => Boolean(sessionStorage.getItem('token')));
 
     const normalizeUser = (payload) => {
         if (!payload) return null;
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
     // angalia kama user ameshaingia
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         if (!token) {
             return;
         }
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
            .then(res => {
                if (isMounted) setUser(normalizeUser(res.data.data));
            })
-           .catch(() => localStorage.removeItem('token'))
+           .catch(() => sessionStorage.removeItem('token'))
            .finally(() => {
                if (isMounted) setLoading(false);
            });
@@ -44,21 +44,21 @@ export const AuthProvider = ({ children }) => {
     // register
     const register = async (data) => {
         const res = await api.post('/register', data);
-        localStorage.setItem('token', res.data.data.token);
+        sessionStorage.setItem('token', res.data.data.token);
         setUser(normalizeUser(res.data.data));
         return res.data;
     };
 
     // login
     const login = async (data) => {
-        //console.log("LOGIN PAYLOAD SENT 👉", data);
+        //console.log("LOGIN PAYLOAD SENT", data);
         const res = await api.post('/login', data);
         const userData = res.data?.data?.user;
         const token = res.data?.data?.token;
         sessionStorage.setItem('user', JSON.stringify(userData));
         sessionStorage.setItem('token', token);
-        //setUser(normalizeUser(res.data.data));
-        setUser(userData);
+        setUser(normalizeUser(res.data.data));
+        //setUser(userData);
         return res; // return full axios response to match callers expecting res.data
     };
 
