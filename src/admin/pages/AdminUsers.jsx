@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchUsers, updateUser, deleteUser } from '../../services/adminApi';
+import { fetchUsers, getAdminList, deleteUser } from '../../services/adminApi';
 import { useAuth } from '../../context/useAuth';
 import { Navigate } from 'react-router-dom';
 
@@ -11,19 +11,30 @@ export default function AdminUsers() {
     const [loadingUsers, setLoadingUsers] = useState(false);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-
-        const fetchUsersList = () => {
+   
+     const fetchUsersList = () => {
         setLoadingUsers(true);
         fetchUsers({ q: query, page })
-            .then(res => setUsers(res.data.data))
-            .catch(() => setError('Imeshindwa kupakia watumiaji.'))
+            .then(res => {
+                console.log("RESPONSE:", res);
+                console.log("FARM RESPONSE:", res.data);
+                console.log("INNER RESPONSE:", res.data.data);
+                setUsers(getAdminList(res));
+            })
+            .catch((err) => {
+                console.log("RESPONSE:", err)
+                console.log("STATUS:", err.response?.status);
+                console.log("DATA:", err.response?.data);
+                setError('Imeshindwa kupakia watumiaji.')})
             .finally(() => setLoadingUsers(false));
     };
-        if (user?.role === 'admin') fetchUsersList();
+
+     useEffect(() => {
+        if (user?.role === 'admin') {
+            fetchUsersList();
+        }
     }, [user, page, query]);
 
-    
 
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;
@@ -60,7 +71,9 @@ export default function AdminUsers() {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map(u => (
+                            {users.length === 0 ? (
+                                <tr><td colSpan="7">Hakuna watumiaji waliopatikana.</td></tr>
+                            ) : users.map(u => (
                                 <tr key={u.id}>
                                     <td>{u.id}</td>
                                     <td>{u.name}</td>

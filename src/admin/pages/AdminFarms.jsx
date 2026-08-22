@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchFarms, deleteFarm } from '../../services/adminApi';
+import { fetchFarms, getAdminList, deleteFarm } from '../../services/adminApi';
 import { useAuth } from '../../context/useAuth';
 import { Navigate } from 'react-router-dom';
 
@@ -8,18 +8,31 @@ export default function AdminFarms() {
     const [farms, setFarms] = useState([]);
     const [error, setError] = useState('');
     const [loadingFarms, setLoadingFarms] = useState(false);
+    console.log("ADNIN FARM HAFIKI HAPA");
 
-    useEffect(() => {
-        if (user?.role === 'admin') loadFarms();
-    }, [user]);
-
+    
     const loadFarms = () => {
         setLoadingFarms(true);
         fetchFarms()
-            .then(res => setFarms(res.data.data))
-            .catch(() => setError('Imeshindwa kupakia mashamba.'))
+            .then(res => {
+                console.log("RESPONSE:", res);
+                console.log("STATUS:", res.data);
+                console.log("RESPONSE:", res.data.data);
+                setFarms(getAdminList(res));
+            })
+            .catch((err) => {
+                console.log("ERROR:", err.response?.data);
+                console.log("ERROR:", err.response?.status);
+                setError('Imeshindwa kupakia mashamba.')})
             .finally(() => setLoadingFarms(false));
     };
+
+    useEffect(() => {
+        if (user?.role === 'admin') {
+            loadFarms();
+        }
+    }, [user]);
+
 
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;
@@ -47,7 +60,9 @@ export default function AdminFarms() {
                             </tr>
                         </thead>
                         <tbody>
-                            {farms.map(farm => (
+                            {farms.length === 0 ? (
+                                <tr><td colSpan="7">Hakuna mashamba yaliyopatikana.</td></tr>
+                            ) : farms.map(farm => (
                                 <tr key={farm.id}>
                                     <td>{farm.id}</td>
                                     <td>{farm.name}</td>

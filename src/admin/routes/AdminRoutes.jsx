@@ -10,7 +10,7 @@ import AdminAnnouncements from '../pages/AdminAnnouncements';
 export default function AdminRoutes() {
     return (
         <Routes>
-            <Route path="" element={<AdminLayout />}>
+            <Route path="*" element={<AdminLayout />}>
                 <Route index element={<Navigate to="dashboard" replace />} />
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="users" element={<AdminUsers />} />
@@ -20,5 +20,7 @@ export default function AdminRoutes() {
                 <Route path="announcements" element={<AdminAnnouncements />} />
             </Route>
         </Routes>
+
+        
     );
 }

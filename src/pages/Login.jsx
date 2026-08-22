@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 import Toast from '../components/Toast';
+import { Eye, EyeOff } from 'lucide-react';
 //import { AuthContext } from '../context/AuthContext';
 
 
@@ -74,6 +75,10 @@ export default function Login() {
         }
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword((prev) => !prev);
+    };
+
 
     return (
         <div style={styles.container}>
@@ -101,7 +106,7 @@ export default function Login() {
 
                 <form onSubmit={handleSubmit}>
                     <div style={styles.field}>
-                        <label style={styles.label}>Email(Barua pepe)</label>
+                        <label style={styles.label}>Barua pepe</label>
                         <input
                             type="email"
                             className="ks-input"
@@ -114,7 +119,7 @@ export default function Login() {
                     </div>
 
                     <div style={styles.field}>
-                        <label style={styles.label}>Password(nywila)</label>
+                        <label style={styles.label}>nywila</label>
                         <div style={styles.passwordRow}>
                             <input
                                 type={showPassword ? 'text' : 'password'}
@@ -127,11 +132,18 @@ export default function Login() {
                             />
                             <button
                                 type="button"
-                                onClick={() => setShowPassword(s => !s)}
+                                onClick={togglePasswordVisibility}
+                                //onClick={() => setShowPassword(s => !s)}
                                 style={styles.eyeBtn}
                                 aria-label={showPassword ? 'Hide password' : 'Show password'}
+                                aria-pressed={showPassword}
                             >
-                                {showPassword ? '🙈' : '👁️'}
+                                {showPassword ? (
+                                    <EyeOff size={20} />
+
+                                ) : (
+                                    <Eye size={20} />
+                                )}
                             </button>
                         </div>
                     </div>

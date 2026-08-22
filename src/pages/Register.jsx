@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
+import { Eye, EyeOff } from 'lucide-react';
 
 
 import Toast from '../components/Toast';
@@ -72,6 +73,11 @@ export default function Register() {
         validateField(newForm);
     };
 
+    const togglePasswordValidate = () => {
+        setShowPassword((prev) => !prev);
+        setShowPasswordConfirm((prev) => !prev);
+    };
+
     return (
         <div style={styles.container}>
             {showSuccessToast && (
@@ -116,11 +122,19 @@ export default function Register() {
                                     {(isPasswordField || isConfirmField) && (
                                         <button
                                             type="button"
-                                            onClick={() => isPasswordField ? setShowPassword(s => !s) : setShowPasswordConfirm(s => !s)}
+                                            onClick={togglePasswordValidate}
+                                            //onClick={() => isPasswordField ? setShowPassword(s => !s) : setShowPasswordConfirm(s => !s)}
                                             style={{marginLeft: 8, cursor: 'pointer', background: 'transparent', border: 'none'}}
                                             aria-label={(isPasswordField ? showPassword : showPasswordConfirm) ? 'Hide password' : 'Show password'}
+                                            aria-pressed={showPassword}
                                         >
-                                            {(isPasswordField ? showPassword : showPasswordConfirm) ? '🙈' : '👁️'}
+                                            {(isPasswordField ? showPassword : showPasswordConfirm) ? (
+                                                <EyeOff size={20}/>
+                                            ) : (
+                                                <Eye size={20}/>
+                                            )
+
+                                            }
                                         </button>
                                     )}
                                 </div>

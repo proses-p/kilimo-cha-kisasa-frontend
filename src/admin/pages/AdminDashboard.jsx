@@ -12,11 +12,11 @@ export default function AdminDashboard() {
         console.log(`Admin Page`)
         if (user?.role === 'admin') {
             fetchDashboard()
-                .then(res => setStats(res.data))
+                .then(res => setStats(res.data.data))
                 .catch(() => setError('Imeshindwa kupakia takwimu za admin.'));
         }
     }, [user]);
-fetch
+
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;
     if (user.role !== 'admin') return <Navigate to="/dashboard" />;
@@ -29,19 +29,23 @@ fetch
             <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(180px, 1fr))', gap:20, marginTop:20}}>
                 <div style={cardStyle}>
                     <h3>Watumiaji</h3>
-                    <p>{stats ? stats.users_count : '...'}</p>
+                    <p>{stats ? stats.total_users : '...'}</p>
                 </div>
                 <div style={cardStyle}>
                     <h3>Mashamba</h3>
-                    <p>{stats ? stats.farms_count : '...'}</p>
+                    <p>{stats ? stats.total_farms : '...'}</p>
+                </div>
+                <div style={cardStyle}>
+                    <h3>Mazao</h3>
+                    <p>{stats ? stats.total_crops : '...'}</p>
                 </div>
                 <div style={cardStyle}>
                     <h3>Vidokezo</h3>
-                    <p>{stats ? stats.farming_tips_count : '...'}</p>
+                    <p>{stats ? stats.total_tips : '...'}</p>
                 </div>
                 <div style={cardStyle}>
                     <h3>Matangazo</h3>
-                    <p>{stats ? stats.announcements_count : '...'}</p>
+                    <p>{stats ? stats.total_announcements : '...'}</p>
                 </div>
             </div>
         </div>

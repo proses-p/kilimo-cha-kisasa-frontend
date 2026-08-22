@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchFarmingTips, deleteFarmingTip } from '../../services/adminApi';
+import { fetchFarmingTips, getAdminList, deleteFarmingTip } from '../../services/adminApi';
 import { useAuth } from '../../context/useAuth';
 import { Navigate } from 'react-router-dom';
 
@@ -9,17 +9,20 @@ export default function AdminFarmingTips() {
     const [error, setError] = useState('');
     const [loadingTips, setLoadingTips] = useState(false);
 
+    const loadTips = () => {
+        setLoadingTips(true);
+        setError('');
+        fetchFarmingTips()
+            .then(res => setTips(getAdminList(res)))
+            .catch(() => setError('Imeshindwa kupakia vidokezo.'))
+            .finally(() => setLoadingTips(false));
+    };
+
     useEffect(() => {
         if (user?.role === 'admin') loadTips();
     }, [user]);
 
-    const loadTips = () => {
-        setLoadingTips(true);
-        fetchFarmingTips()
-            .then(res => setTips(res.data.data))
-            .catch(() => setError('Imeshindwa kupakia vidokezo.'))
-            .finally(() => setLoadingTips(false));
-    };
+    
 
     if (loading) return <p>Loading...</p>;
     if (!user) return <Navigate to="/login" />;
@@ -44,7 +47,9 @@ export default function AdminFarmingTips() {
                             </tr>
                         </thead>
                         <tbody>
-                            {tips.map(tip => (
+                            {tips.length === 0 ? (
+                                <tr><td colSpan="4">Hakuna vidokezo vilivyopatikana.</td></tr>
+                            ) : tips.map(tip => (
                                 <tr key={tip.id}>
                                     <td>{tip.id}</td>
                                     <td>{tip.title}</td>

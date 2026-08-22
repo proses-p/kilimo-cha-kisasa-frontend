@@ -1,5 +1,10 @@
 import api from '../api/axios';
 
+export const getAdminList = (response) => {
+	const data = response?.data?.data;
+	return Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : [];
+};
+
 export const fetchDashboard = () => api.get('/admin/dashboard/stats');
 
 export const fetchUsers = (params) => api.get('/admin/users', { params });

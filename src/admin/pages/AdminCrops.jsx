@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchCrops, deleteCrop } from '../../services/adminApi';
+import { fetchCrops, getAdminList, deleteCrop } from '../../services/adminApi';
 import { useAuth } from '../../context/useAuth';
 import { Navigate } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ export default function AdminCrops() {
         try {
             const res = await fetchCrops();
             console.log("Response:", res.data);
-            setCrops(res.data.data);
+            setCrops(getAdminList(res));
         } catch {
             setError('Imeshindwa kupakia mazao.');
         } finally {
@@ -30,7 +30,7 @@ export default function AdminCrops() {
             try {
                 const res = await fetchCrops();
                 console.log("Response:", res.data);
-                setCrops(res.data.data);
+                setCrops(getAdminList(res));
             } catch {
                 setError('Imeshindwa kupakia mazao.');
             } finally {
@@ -65,7 +65,9 @@ export default function AdminCrops() {
                             </tr>
                         </thead>
                         <tbody>
-                            {crops.map(crop => (
+                            {crops.length === 0 ? (
+                                <tr><td colSpan="5">Hakuna mazao yaliyopatikana.</td></tr>
+                            ) : crops.map(crop => (
                                 <tr key={crop.id}>
                                     <td>{crop.id}</td>
                                     <td>{crop.name}</td>

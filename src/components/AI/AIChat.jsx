@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Bot, Leaf, Send, Sparkles, X } from "lucide-react";
 import api from "../../api/axios";
+import "./AIChat.css";
 
 const quickQuestions = [
     "Ni mbolea gani nzuri kwa mahindi?",
@@ -9,6 +12,7 @@ const quickQuestions = [
 ];
 
 export default function AIChat() {
+    const location = useLocation();
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
@@ -42,6 +46,10 @@ export default function AIChat() {
             }, 100);
         }
     }, [open]);
+
+    if (location.pathname.startsWith("/admin")) {
+        return null;
+    }
 
     /*
     |--------------------------------------------------------------------------
@@ -129,570 +137,49 @@ export default function AIChat() {
 
     return (
         <>
-            {/* =========================================================
-                Floating AI Button
-            ========================================================= */}
+            {!open && <button className="ai-chat-trigger" onClick={() => setOpen(true)} aria-label="Fungua Kilimo Smart AI">
+                <Sparkles size={18} aria-hidden="true" /> <span>Uliza AI</span>
+            </button>}
 
-            {!open && (
-                <button
-                    onClick={() => setOpen(true)}
-                    aria-label="Open Kilimo Smart AI"
-                    className="
-                        fixed
-                        bottom-6
-                        right-6
-                        z-[9999]
-
-                        w-16
-                        h-16
-
-                        rounded-full
-
-                        bg-green-600
-                        hover:bg-green-700
-
-                        text-white
-
-                        shadow-xl
-                        hover:shadow-2xl
-
-                        flex
-                        items-center
-                        justify-center
-
-                        transition-all
-                        duration-200
-
-                        hover:scale-105
-                    "
-                >
-                    <span className="text-3xl">
-                        🤖
-                    </span>
-                </button>
-            )}
-
-            {/* =========================================================
-                Chat Window
-            ========================================================= */}
-
-            {open && (
-                <div
-                    className="
-                        fixed
-                        z-[9999]
-
-                        bottom-4
-                        right-4
-
-                        sm:bottom-6
-                        sm:right-6
-
-                        w-[calc(100vw-2rem)]
-                        sm:w-[390px]
-
-                        h-[calc(100vh-2rem)]
-                        sm:h-[650px]
-
-                        max-h-[750px]
-
-                        bg-white
-
-                        rounded-2xl
-
-                        shadow-2xl
-
-                        border
-                        border-gray-200
-
-                        overflow-hidden
-
-                        flex
-                        flex-col
-                    "
-                >
-
-                    {/* =================================================
-                        Header
-                    ================================================= */}
-
-                    <div
-                        className="
-                            bg-gradient-to-r
-                            from-green-700
-                            to-green-600
-
-                            text-white
-
-                            px-5
-                            py-4
-
-                            flex
-                            items-center
-                            justify-between
-
-                            shrink-0
-                        "
-                    >
-
-                        <div className="flex items-center gap-3">
-
-                            <div
-                                className="
-                                    w-11
-                                    h-11
-                                    rounded-full
-
-                                    bg-white/15
-
-                                    flex
-                                    items-center
-                                    justify-center
-
-                                    text-2xl
-                                "
-                            >
-                                🤖
-                            </div>
-
-                            <div>
-                                <h2 className="font-bold text-base">
-                                    Kilimo Smart AI
-                                </h2>
-
-                                <div className="flex items-center gap-1.5">
-
-                                    <span
-                                        className="
-                                            w-2
-                                            h-2
-                                            rounded-full
-                                            bg-green-300
-                                        "
-                                    />
-
-                                    <span className="text-xs text-green-100">
-                                        AI Assistant
-                                    </span>
-
-                                </div>
-                            </div>
-
+            {open && <div className="ai-chat-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setOpen(false)}>
+                <section className="ai-chat-modal" role="dialog" aria-modal="true" aria-labelledby="ai-chat-title">
+                    <header className="ai-chat-header">
+                        <div className="ai-chat-brand">
+                            <div className="ai-chat-brand-icon"><Bot size={22} aria-hidden="true" /></div>
+                            <div><h2 id="ai-chat-title" className="ai-chat-title">Kilimo Smart AI</h2><div className="ai-chat-status">Msaidizi wa kilimo</div></div>
                         </div>
+                        <button className="ai-chat-close" onClick={() => setOpen(false)} aria-label="Funga AI"><X size={20} /></button>
+                    </header>
 
-                        <button
-                            onClick={() => setOpen(false)}
-                            className="
-                                w-9
-                                h-9
-                                rounded-full
-
-                                hover:bg-white/10
-
-                                flex
-                                items-center
-                                justify-center
-
-                                text-xl
-
-                                transition
-                            "
-                            aria-label="Close AI"
-                        >
-                            ×
-                        </button>
-
-                    </div>
-
-
-                    {/* =================================================
-                        Messages Area
-                    ================================================= */}
-
-                    <div
-                        className="
-                            flex-1
-                            overflow-y-auto
-
-                            bg-gray-50
-
-                            px-4
-                            py-5
-
-                            space-y-4
-                        "
-                    >
-
-
-                        {/* Welcome */}
-
-                        {showWelcome && (
-                            <div className="h-full flex flex-col justify-center">
-
-                                <div className="text-center mb-6">
-
-                                    <div
-                                        className="
-                                            w-16
-                                            h-16
-                                            mx-auto
-                                            rounded-full
-
-                                            bg-green-100
-
-                                            flex
-                                            items-center
-                                            justify-center
-
-                                            text-3xl
-
-                                            mb-4
-                                        "
-                                    >
-                                        🌱
-                                    </div>
-
-                                    <h3
-                                        className="
-                                            text-lg
-                                            font-bold
-                                            text-gray-800
-                                        "
-                                    >
-                                        Karibu Kilimo Smart AI
-                                    </h3>
-                                
-
-                                    <p
-                                        className="
-                                            text-sm
-                                            text-gray-500
-                                            mt-2
-                                            px-4
-                                        "
-                                    >
-                                        Uliza swali lolote kuhusu
-                                        kilimo, mazao, mbolea,
-                                        magonjwa au wadudu.
-                                    </p>
-
-                                </div>
-
-
-                                {/* Quick Questions */}
-
-                                <div className="space-y-2">
-
-                                    <p
-                                        className="
-                                            text-xs
-                                            font-semibold
-                                            text-gray-500
-                                            uppercase
-                                            tracking-wide
-                                        "
-                                    >
-                                        Jaribu kuuliza
-                                    </p>
-
-                                    {quickQuestions.map((question) => (
-                                        <button
-                                            key={question}
-                                            onClick={() =>
-                                                sendMessage(question)
-                                            }
-                                            className="
-                                                w-full
-                                                text-left
-
-                                                bg-white
-
-                                                border
-                                                border-gray-200
-
-                                                rounded-xl
-
-                                                px-4
-                                                py-3
-
-                                                text-sm
-                                                text-gray-700
-
-                                                hover:border-green-400
-                                                hover:bg-green-50
-
-                                                transition
-                                            "
-                                        >
-                                            {question}
-                                        </button>
-                                    ))}
-
-                                </div>
-
+                    <div className="ai-chat-messages">
+                        {showWelcome && <div className="ai-chat-welcome">
+                            <div className="ai-chat-welcome-icon"><Leaf size={28} /></div>
+                            <h3>Karibu Kilimo Smart AI</h3>
+                            <p>Uliza swali lolote kuhusu kilimo, mazao, mbolea, magonjwa au wadudu.</p>
+                            <div className="ai-chat-suggestions">
+                                {quickQuestions.map((question) => <button className="ai-chat-suggestion" key={question} onClick={() => sendMessage(question)}>{question}</button>)}
                             </div>
-                        )}
+                        </div>}
 
-
-                        {/* Messages */}
-
-                        {messages.map((item) => (
-
-                            <div
-                                key={item.id}
-                                className={`
-                                    flex
-                                    ${
-                                        item.role === "user"
-                                            ? "justify-end"
-                                            : "justify-start"
-                                    }
-                                `}
-                            >
-
-                                <div
-                                    className={`
-                                        max-w-[85%]
-
-                                        rounded-2xl
-
-                                        px-4
-                                        py-3
-
-                                        text-sm
-                                        leading-6
-
-                                        ${
-                                            item.role === "user"
-                                                ? `
-                                                    bg-green-600
-                                                    text-white
-                                                    rounded-br-md
-                                                  `
-                                                : `
-                                                    bg-white
-                                                    text-gray-800
-                                                    border
-                                                    border-gray-200
-                                                    rounded-bl-md
-                                                  `
-                                        }
-                                    `}
-                                >
-
-                                    {item.role === "assistant" && (
-                                        <div
-                                            className="
-                                                flex
-                                                items-center
-                                                gap-2
-
-                                                text-xs
-                                                font-semibold
-                                                text-green-700
-
-                                                mb-1
-                                            "
-                                        >
-                                            🤖 Kilimo Smart AI
-                                        </div>
-                                    )}
-
-                                    <div className="whitespace-pre-wrap">
-                                        {item.content}
-                                    </div>
-
-                                </div>
-
+                        {messages.map((item) => <div className={`ai-chat-message ${item.role}`} key={item.id}>
+                            <div className="ai-chat-bubble">
+                                {item.role === "assistant" && <div className="ai-chat-assistant-label"><Bot size={13} /> Kilimo Smart AI</div>}
+                                {item.content}
                             </div>
-
-                        ))}
-
-
-                        {/* =================================================
-                            Typing indicator
-                        ================================================= */}
-
-                        {loading && (
-                            <div className="flex justify-start">
-
-                                <div
-                                    className="
-                                        bg-white
-                                        border
-                                        border-gray-200
-
-                                        rounded-2xl
-                                        rounded-bl-md
-
-                                        px-4
-                                        py-3
-                                    "
-                                >
-
-                                    <div className="flex gap-1">
-
-                                        <span
-                                            className="
-                                                w-2
-                                                h-2
-                                                bg-gray-400
-                                                rounded-full
-                                                animate-bounce
-                                            "
-                                        />
-
-                                        <span
-                                            className="
-                                                w-2
-                                                h-2
-                                                bg-gray-400
-                                                rounded-full
-                                                animate-bounce
-                                            "
-                                        />
-
-                                        <span
-                                            className="
-                                                w-2
-                                                h-2
-                                                bg-gray-400
-                                                rounded-full
-                                                animate-bounce
-                                            "
-                                        />
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        )}
-
+                        </div>)}
+                        {loading && <div className="ai-chat-message"><div className="ai-chat-bubble ai-chat-typing"><span /><span /><span /></div></div>}
                         <div ref={messagesEndRef} />
-
                     </div>
 
-
-                    {/* =================================================
-                        Input Area
-                    ================================================= */}
-
-                    <div
-                        className="
-                            bg-white
-
-                            border-t
-                            border-gray-200
-
-                            p-3
-
-                            shrink-0
-                        "
-                    >
-
-                        <div
-                            className="
-                                flex
-                                items-center
-                                gap-2
-
-                                bg-gray-50
-
-                                border
-                                border-gray-200
-
-                                rounded-xl
-
-                                p-2
-
-                                focus-within:border-green-500
-                                focus-within:ring-2
-                                focus-within:ring-green-100
-                            "
-                        >
-
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={message}
-                                onChange={(e) =>
-                                    setMessage(e.target.value)
-                                }
-                                onKeyDown={handleKeyDown}
-                                disabled={loading}
-                                placeholder={
-                                    loading
-                                        ? "AI anajibu..."
-                                        : "Andika swali..."
-                                }
-                                className="
-                                    flex-1
-
-                                    bg-transparent
-
-                                    outline-none
-
-                                    px-2
-
-                                    text-sm
-                                    text-gray-800
-
-                                    placeholder:text-gray-400
-
-                                    disabled:opacity-50
-                                "
-                            />
-
-                            <button
-                                onClick={() => sendMessage()}
-                                disabled={
-                                    !message.trim() ||
-                                    loading
-                                }
-                                className="
-                                    w-10
-                                    h-10
-
-                                    rounded-lg
-
-                                    bg-green-600
-                                    hover:bg-green-700
-
-                                    text-white
-
-                                    flex
-                                    items-center
-                                    justify-center
-
-                                    transition
-
-                                    disabled:bg-gray-300
-                                    disabled:cursor-not-allowed
-                                "
-                                aria-label="Send message"
-                            >
-                                ➤
-                            </button>
-
+                    <footer className="ai-chat-composer">
+                        <div className="ai-chat-form">
+                            <input ref={inputRef} className="ai-chat-input" value={message} onChange={(event) => setMessage(event.target.value)} onKeyDown={handleKeyDown} disabled={loading} placeholder={loading ? "AI anajibu..." : "Andika swali..."} aria-label="Andika swali kwa AI" />
+                            <button className="ai-chat-send" onClick={() => sendMessage()} disabled={!message.trim() || loading} aria-label="Tuma ujumbe"><Send size={17} /></button>
                         </div>
-
-                        <p
-                            className="
-                                text-[10px]
-                                text-gray-400
-                                text-center
-                                mt-2
-                            "
-                        >
-                            Kilimo Smart AI inaweza kutoa majibu
-                            yanayohitaji uthibitisho wa mtaalamu.
-                        </p>
-
-                    </div>
-
-                </div>
-            )}
+                        <p className="ai-chat-disclaimer">Majibu ya AI yanahitaji uthibitisho wa mtaalamu.</p>
+                    </footer>
+                </section>
+            </div>}
         </>
     );
 }

@@ -1,0 +1,22 @@
+.notification-bell { position: relative; z-index: 20; }
+.notification-button { position: relative; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #d7e5d9; border-radius: 12px; background: #fff; color: #166534; cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
+.notification-button:hover { background: #f0fdf4; transform: translateY(-1px); }
+.notification-button:focus-visible, .notification-close:focus-visible, .notification-read:focus-visible { outline: 3px solid #fbbf24; outline-offset: 2px; }
+.notification-count { position: absolute; top: -7px; right: -7px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 999px; background: #dc2626; color: #fff; font-size: 11px; font-weight: 800; }
+.notification-panel { position: absolute; top: 52px; right: 0; width: min(360px, calc(100vw - 28px)); overflow: hidden; border: 1px solid #dbe5dc; border-radius: 16px; background: #fff; box-shadow: 0 18px 45px rgba(15, 23, 42, .18); text-align: left; }
+.notification-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 15px 16px; border-bottom: 1px solid #e8efe9; background: #f7fbf7; }
+.notification-panel-header h3 { margin: 0; color: #17251b; font-size: 16px; }
+.notification-panel-header span { color: #718077; font-size: 11px; }
+.notification-close { display: grid; width: 30px; height: 30px; place-items: center; border: 0; border-radius: 8px; background: transparent; color: #647067; cursor: pointer; }
+.notification-close:hover { background: #e5f3e7; color: #166534; }
+.notification-list { max-height: 390px; overflow-y: auto; }
+.notification-item { display: flex; gap: 11px; padding: 14px 16px; border-bottom: 1px solid #edf2ed; }
+.notification-item-icon { display: grid; width: 32px; height: 32px; flex: 0 0 auto; place-items: center; border-radius: 10px; background: #dcfce7; color: #15803d; }
+.notification-item-content { min-width: 0; }
+.notification-item strong { display: block; color: #243329; font-size: 13px; line-height: 1.35; }
+.notification-item p { margin: 4px 0 8px; color: #66746a; font-size: 12px; line-height: 1.45; }
+.notification-read { padding: 0; border: 0; background: transparent; color: #15803d; cursor: pointer; font-size: 11px; font-weight: 700; }
+.notification-read:hover { text-decoration: underline; }
+.notification-empty { display: grid; justify-items: center; gap: 7px; padding: 34px 16px; color: #6b7b70; text-align: center; }
+.notification-empty p { margin: 0; font-size: 13px; }
+@media (max-width: 480px) { .notification-panel { position: fixed; top: 64px; right: 14px; left: 14px; width: auto; } }
