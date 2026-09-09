@@ -8,7 +8,7 @@ import Farms      from './pages/Farms';
 import FarmDetail from './pages/FarmDetail';
 import Dashboard  from './pages/Dashboard';
 import AdminRoutes from './admin/routes/AdminRoutes';
-import AIChat from './components/AI/AIChat';
+// import AIChat from './components/AI/AIChat';
     
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -17,14 +17,18 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppContent = () => {
-    const { user, loading } = useAuth();
+    // const { user, loading } = useAuth();
 
     return (
         <>
+
+            {/* {!loading && user && <AIChat />} */}
+
             <Routes>
                 <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
 
                 <Route
                     path="/dashboard"
@@ -68,7 +72,7 @@ const AppContent = () => {
                 />
             </Routes>
 
-            {!loading && user && <AIChat />}
+            
         </>
     );
 };

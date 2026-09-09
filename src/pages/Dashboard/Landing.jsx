@@ -1,50 +1,38 @@
-import HeroSection from "./components/HeroSection";
-import CropCards from "./components/CropCards";
-{/*import WeatherWidget from "./components/WeatherWidget";*/}
-{/*import StatsCards from "./components/StatsCards";*/}
-import TipsSection from "./components/TipsSection";
-import Navbars from "./components/Navbars";
-import Footer from './components/Footer';
+import { useEffect, useState } from 'react';
+import { ArrowRight, Bot, Check, ChevronRight, CloudSun, Leaf, Menu, Play, Sprout, Sun, TrendingUp, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import '../../index.css';
 
+const features = [
+  [CloudSun, 'Weather intelligence', 'Know what the sky is planning before you head to the field.'],
+  [Bot, 'AI crop assistant', 'Practical answers for pests, soil, planting, and harvest decisions.'],
+  [TrendingUp, 'Grow with confidence', 'Turn farm activity into clear insights and better outcomes.'],
+];
+const crops = [
+  ['Tomatoes', 'Market-ready crop planning', 'https://images.unsplash.com/photo-1592841200221-a6898f307baa?auto=format&fit=crop&w=900&q=85'],
+  ['Maize', 'Smarter yields, season after season', 'https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=900&q=85'],
+  ['Rice', 'Precision from seed to harvest', 'https://images.unsplash.com/photo-1536304993881-ff6e9eefa2a6?auto=format&fit=crop&w=900&q=85'],
+];
+const steps = [['01', 'Set up your farm', 'Add your location, crops, and what matters most to your farm.'], ['02', 'Get a clearer picture', 'Use live weather, crop guidance, and simple farm insights.'], ['03', 'Make your next move', 'Plan the day, protect your yield, and grow with confidence.']];
 
-export default function Dashboard() {
-    return (
-        <div style={styles.container}>
-            <HeroSection />
-            <Navbars />
-            <CropCards />
-            {/*<WeatherWidget />*/}
-           {/* <StatsCards />*/}
-            <TipsSection />
-            <Footer />
-        </div>
-    );
+export default function Landing() {
+  const [open, setOpen] = useState(false); const [email, setEmail] = useState(''); const [subscribed, setSubscribed] = useState(false);
+  useEffect(() => { const observer = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('is-visible')), { threshold: .12 }); document.querySelectorAll('.reveal').forEach((el) => observer.observe(el)); return () => observer.disconnect(); }, []);
+  const subscribe = (event) => { event.preventDefault(); if (email.trim()) { setSubscribed(true); setEmail(''); } };
+  return <div className="landing-page">
+    <header className="site-header"><Link to="/" className="brand"><span className="brand-mark"><Leaf size={19} /></span><span>Kilimo<span>Cha Kisasa</span></span></Link><button className="mobile-menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button><nav className={`main-nav ${open ? 'open' : ''}`}><a href="#why">Why Kilimo</a><a href="#features">Features</a><a href="#crops">Crop guide</a><a href="#how">How it works</a><Link className="nav-login" to="/login">Log in</Link><Link className="button button-small" to="/register">Start growing <ArrowRight size={15} /></Link></nav></header>
+    <main>
+      <section className="hero section-shell"><div className="hero-copy reveal"><p className="eyebrow"><span /> The smarter way to farm</p><h1>Grow more with <em>clarity.</em></h1><p className="hero-description">Practical intelligence for every season. Kilimo Cha Kisasa helps farmers make better decisions from the soil up.</p><div className="hero-actions"><Link className="button" to="/register">Start growing today <ArrowRight size={17} /></Link><a className="play-link" href="#how"><span><Play size={14} fill="currentColor" /></span> See how it works</a></div><div className="hero-proof"><div className="avatar-stack"><span>JM</span><span>AN</span><span>MK</span><b>+</b></div><p><strong>2,400+</strong> farmers growing smarter</p></div></div><div className="hero-visual reveal reveal-delay-2"><div className="hero-image"><img src="https://images.unsplash.com/photo-1592982537447-6f2a6a0a7f0d?auto=format&fit=crop&w=1400&q=90" alt="Farmer inspecting young plants" /></div><div className="hero-badge badge-weather"><span className="badge-icon sun-icon"><Sun size={17} /></span><div><small>Today in Morogoro</small><strong>24° <i>Partly cloudy</i></strong></div></div><div className="hero-badge badge-yield"><span className="badge-icon leaf-icon"><Sprout size={17} /></span><div><small>Yield forecast</small><strong>+18.4% <i>this season</i></strong></div></div><span className="visual-stamp">EST. <strong>2024</strong><br />Farm smarter</span></div></section>
+      <section className="trust-strip"><p>Built for the people who feed us</p><div><span>FARMERS FIRST</span><span>DATA WITH PURPOSE</span><span>ROOTED IN AFRICA</span><span>BETTER HARVESTS</span></div></section>
+      <section className="section-shell why-section" id="why"><div className="section-intro reveal"><p className="eyebrow"><span /> Why Kilimo Cha Kisasa?</p><h2>Farming is hard.<br /><em>Decisions shouldn't be.</em></h2></div><div className="why-grid"><div className="why-photo reveal"><img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&w=1100&q=85" alt="Hands caring for a healthy crop" /><div className="photo-caption"><span>01</span><p>Small choices<br /><strong>create big harvests.</strong></p></div></div><div className="why-content reveal reveal-delay-1"><p>From unpredictable weather to changing markets, every growing season asks a lot of you. We bring the right information together, so you can spend less time guessing and more time growing.</p><div className="mini-stat"><strong>78%</strong><span>of farmers say better information changes how they farm.</span></div><Link className="text-link" to="/register">Meet your new farm companion <ArrowRight size={16} /></Link></div></div></section>
+      <section className="feature-band" id="features"><div className="section-shell"><div className="section-intro centered reveal"><p className="eyebrow"><span /> One platform, more possibility</p><h2>Everything your farm<br /><em>needs to move forward.</em></h2></div><div className="feature-grid">{features.map(([Icon, title, text], i) => <article className={`feature-card reveal reveal-delay-${i + 1}`} key={title}><div className="feature-icon"><Icon size={22} /></div><span className="card-number">0{i + 1}</span><h3>{title}</h3><p>{text}</p><a href="#how" aria-label={title}><ChevronRight size={17} /></a></article>)}</div></div></section>
+      <section className="section-shell crops-section" id="crops"><div className="section-row reveal"><div><p className="eyebrow"><span /> Grow what matters</p><h2>Guidance for your<br /><em>kind of crop.</em></h2></div><p>From the first seed to the final harvest, get simple, relevant guidance for the crops you know best.</p></div><div className="crop-grid">{crops.map(([name, detail, image], i) => <article className={`crop-card reveal reveal-delay-${i + 1}`} key={name}><img src={image} alt={`${name} crop`} /><div className="crop-overlay"><span>0{i + 1}</span><h3>{name}</h3><p>{detail}</p><ArrowRight size={18} /></div></article>)}</div></section>
+      <section className="assistant-section section-shell"><div className="assistant-panel reveal"><div className="assistant-copy"><p className="eyebrow light"><span /> Always in your corner</p><h2>Meet your new<br /><em>farm companion.</em></h2><p>Ask a question. Get a useful answer. Our AI Agriculture Assistant turns complex farming knowledge into clear next steps, in language that feels like home.</p><Link className="button button-light" to="/register">Ask the assistant <ArrowRight size={17} /></Link></div><div className="chat-preview"><div className="chat-top"><span className="online-dot" /> Kilimo AI <small>Online now</small></div><div className="chat-message farmer-message">My tomato leaves are curling. What should I check first?</div><div className="chat-message ai-message"><span className="ai-avatar"><Bot size={15} /></span><div>Start by checking the underside of the leaves for pests. Also check soil moisture and recent temperature changes.<div className="chat-tags"><span>Check pests</span><span>Soil health</span></div></div></div><div className="chat-input">Ask anything about your farm <ArrowRight size={15} /></div></div></div></section>
+      <section className="section-shell smart-section"><div className="smart-visual reveal"><img src="https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1100&q=85" alt="Green crop rows under a bright sky" /><div className="weather-card"><div className="weather-header"><span>Farm forecast</span><CloudSun size={19} /></div><strong>24°</strong><p>Partly cloudy · Morogoro</p><div className="forecast"><span>Now <b>24°</b></span><span>11 AM <b>26°</b></span><span>2 PM <b>28°</b></span><span>5 PM <b>23°</b></span></div></div></div><div className="smart-copy reveal reveal-delay-1"><p className="eyebrow"><span /> See what's coming</p><h2>Work with the weather,<br /><em>not against it.</em></h2><p>Make every day count with a clear view of the conditions around your farm. Know when to plant, water, protect, and harvest.</p><ul><li><Check size={16} /> Local weather alerts</li><li><Check size={16} /> Crop-specific recommendations</li><li><Check size={16} /> A plan for every season</li></ul><Link className="text-link" to="/register">Explore smart farming <ArrowRight size={16} /></Link></div></section>
+      <section className="steps-section" id="how"><div className="section-shell"><div className="section-intro centered reveal"><p className="eyebrow"><span /> Simple by design</p><h2>Your next season starts<br /><em>with one small step.</em></h2></div><div className="steps-grid">{steps.map(([number, title, text], i) => <div className={`step reveal reveal-delay-${i + 1}`} key={number}><span className="step-number">{number}</span><div><h3>{title}</h3><p>{text}</p></div>{i < 2 && <div className="step-line" />}</div>)}</div></div></section>
+      <section className="testimonial-section section-shell"><div className="testimonial-photo reveal"><img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=1000&q=85" alt="Farmer holding fresh produce" /><span>From our community</span></div><div className="testimonial-copy reveal reveal-delay-1"><div className="quote-mark">“</div><blockquote>“Kilimo helped me stop reacting to the season and start planning for it. I feel more confident every time I step into my field.”</blockquote><div className="person"><div className="person-avatar">FA</div><p><strong>Fatuma Amani</strong><small>Tomato farmer · Arusha</small></p></div><div className="quote-dots"><b /><span /><span /></div></div></section>
++      <section className="final-cta section-shell reveal"><div><p className="eyebrow light"><span /> Better days are growing</p><h2>Let's grow a better<br /><em>future together.</em></h2><p>Join thousands of farmers building a more productive, resilient future for agriculture.</p><Link className="button button-light" to="/register">Start your journey <ArrowRight size={17} /></Link></div><div className="cta-leaf"><Sprout size={125} strokeWidth={.8} /></div></section>
++    </main>
++    <footer className="site-footer"><div className="footer-top"><div className="footer-brand"><Link to="/" className="brand"><span className="brand-mark"><Leaf size={19} /></span><span>Kilimo<span>Cha Kisasa</span></span></Link><p>Tools and intelligence for the farmers shaping tomorrow.</p></div><div className="footer-newsletter"><p>Get fresh insights for your farm.</p>{subscribed ? <span className="subscribed"><Check size={15} /> You're on the list.</span> : <form onSubmit={subscribe}><input type="email" placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} required aria-label="Email address" /><button type="submit" aria-label="Subscribe"><ArrowRight size={17} /></button></form>}</div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Kilimo Cha Kisasa</span><div><a href="#why">About</a><a href="#features">Features</a><a href="#how">How it works</a><a href="mailto:prosesprojestus0@gmail.com">Contact</a></div><span>Made for better harvests.</span></div></footer>
++  </div>;
 }
-
-const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '0px',
-        width: '100%',
-        padding: '0px',
-        background: `
-            radial-gradient(circle at 10% 0%, rgba(94, 234, 212, 0.10), transparent 40%),
-            radial-gradient(circle at 90% 100%, rgba(74, 222, 128, 0.08), transparent 45%),
-            linear-gradient(import HeroSection from "./components/HeroSection";
-            import CropCards from "./components/CropCards";
-            import WeatherWidget from "./components/WeatherWidget";
-            {/*import StatsCards from "./components/StatsCards";*/}
-            import TipsSection from "./components/TipsSection";
-            import Navbars from "./components/Navbars";
-            import Footer from './components/Footer';
-
-
-
-            180deg, #07191E 0%, #07191E 35%, #02F5A1 65%, #02F5A1 100%)
-        `,
-        backgroundAttachment: 'fixed',
-        minHeight: '100vh',
-        fontFamily: "'Inter', 'Segoe UI', sans-serif"
-    },
-};

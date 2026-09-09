@@ -4,6 +4,7 @@ import { useAuth } from '../context/useAuth';
 import api from '../api/axios';
 import NotificationBell from '../components/NotificationBell';
 import { FaHome } from "react-icons/fa";
+import AIChat from '../components/AI/AIChat';
 
 export default function Dashboard() {
     const [farms, setFarms]     = useState([]);
@@ -33,6 +34,7 @@ export default function Dashboard() {
                 <span style={styles.navLogo}>🌾 Kilimo Smart</span>
                 <div style={styles.navRight}>
                     <span style={styles.navUser}>👤 {user?.name}</span>
+                    <AIChat/>
                     <button
                        className="ks-navbtn"
                        style={styles.navBtn}
