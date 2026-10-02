@@ -36,7 +36,7 @@ export default function NotificationBell() {
     return (
         <div className="notification-bell" ref={panelRef}>
             <button className="notification-button" onClick={() => setShow(current => !current)} aria-label={`Notifications, ${notifications.length} unread`} aria-expanded={show}>
-                <Bell size={20} aria-hidden="true" />
+                <Bell size={10} aria-hidden="true" />
                 {notifications.length > 0 && <span className="notification-count">{notifications.length > 99 ? '99+' : notifications.length}</span>}
             </button>
             {show && <section className="notification-panel" aria-label="Notifications">
