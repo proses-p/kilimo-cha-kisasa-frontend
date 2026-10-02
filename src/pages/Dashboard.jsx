@@ -49,15 +49,16 @@ export default function Dashboard() {
         <main className="dashboard-main">
             <header className="dashboard-topbar"><button className="mobile-menu-button" onClick={() => setSidebarOpen(true)} aria-label="Open navigation"><Menu size={22} /></button><div className="breadcrumb"><span>Workspace</span><ChevronRight size={14} /><b>Dashboard</b></div>
             <div className="topbar-actions">
-                <span className="topbar-date">Friday, 11 September 2026</span>
-                <AIChat />
-            <div className="notification-wrap">
-                <NotificationBell />
-                <Bell className="notification-fallback" size={0} /></div>
-                <button className="topbar-avatar" aria-label="Open profile">
-                    {firstName.charAt(0)}
-                    </button>
-                    </div>
+    <span className="topbar-date">Friday, 11 September 2026</span>
+    <AIChat />
+    <div className="notification-wrap">
+        <NotificationBell />
+        <Bell className="notification-fallback" size={0} />
+    </div>
+    <button className="topbar-avatar" aria-label="Open profile">
+        {firstName.charAt(0)}
+    </button>
+</div>
                     </header>
             <div className="dashboard-content">
                 <section className="welcome-row"><div>
