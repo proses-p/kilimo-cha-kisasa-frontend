@@ -1,5 +1,5 @@
 .notification-bell { position: relative; z-index: 20; }
-.notification-button { position: relative; display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #d7e5d9; border-radius: 12px; background: #fff; color: #166534; cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
+.notification-button { width: 42px; height: 42px; place-items: center; border: 1px solid #d7e5d9; border-radius: 12px; background: #fff; color: #166534; cursor: pointer; transition: background 160ms ease, transform 160ms ease; }
 .notification-button:hover { background: #f0fdf4; transform: translateY(-1px); }
 .notification-button:focus-visible, .notification-close:focus-visible, .notification-read:focus-visible { outline: 3px solid #fbbf24; outline-offset: 2px; }
 .notification-count { position: absolute; top: -7px; right: -7px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border: 2px solid #fff; border-radius: 999px; background: #dc2626; color: #fff; font-size: 11px; font-weight: 800; }
