@@ -39,7 +39,7 @@ export default function NotificationBell() {
                 <Bell size={20} aria-hidden="true" />
                 {notifications.length > 0 && <span className="notification-count">{notifications.length > 99 ? '99+' : notifications.length}</span>}
             </button>
-            {show && <section className="notification-panel" aria-label="Notifications">
+            {/* {show && <section className="notification-panel" aria-label="Notifications">
                 <div className="notification-panel-header">
                     <div><h3>Notifications</h3><span>{notifications.length} unread</span></div>
                     <button className="notification-close" onClick={() => setShow(false)} aria-label="Close notifications"><X size={17} /></button>
@@ -56,7 +56,7 @@ export default function NotificationBell() {
                         </article>
                     ))}
                 </div>
-            </section>}
+            </section>} */}
         </div>
     );
 }
