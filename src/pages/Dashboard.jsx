@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-    Bell, ChevronRight, CloudSun, Droplets, LayoutDashboard, Leaf,
+    ChevronRight, CloudSun, Droplets, LayoutDashboard, Leaf,
     LogOut, Menu, Plus, Sprout, Tractor, TrendingUp, UserRound, Wind, X,
     MapPinned, Bot, Sun
 } from 'lucide-react';
@@ -61,7 +61,6 @@ export default function Dashboard() {
                         <AIChat />
                         <div className="notification-wrap">
                             <NotificationBell />
-                            <Bell className="notification-fallback" size={0} />
                         </div>
                         <button className="topbar-avatar" aria-label="Open profile">
                             {firstName.charAt(0)}

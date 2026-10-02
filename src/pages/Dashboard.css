@@ -9,3 +9,6 @@
 
 .topbar-actions{gap:16px;display: flex;align-items: center;}
 }
+
+.dashboard-topbar .notification-wrap{display:flex;align-items:center;justify-content:center}
+.dashboard-topbar .ai-chat-trigger:hover,.dashboard-topbar .notification-button:hover{transform:none}
